@@ -67,11 +67,39 @@ imagem:
 
 \begin{figure}[H]
     \begin{center}
-        \includegraphics[width=0.8\textwidth]{images/desafio.png}\par
+        \includegraphics[width=0.5\textwidth]{images/desafio.png}\par
         \caption{representação do problema}
         \label{fig:problem}
     \end{center}
 \end{figure}
+
+Após obter esta imagem decidi-mos nomear cada vértice do problema com uma
+letra maiúscula.
+Assim, o aspeto do desafio final utilizada é:
+
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=0.9\textwidth]{images/desafioLetras.png}\par
+        \caption{vértices nomeados}
+        \label{fig:named}
+    \end{center}
+\end{figure}
+
+\chapter{Formulação do Problema}
+
+\section{Variáveis de decisão}
+As variáveis de decisão representam o número de vezes que um dado arco
+é percorrido. Por isso, é necessário que exista uma variável de decisão
+por cada aresta.\\
+A nomenclatura adaptada pelo grupo seguiu as seguintes regras.
+As arestas têm o nome \textit{xij} em que o \textit{i} é a aresta onde essa aresta começa
+e \textit{j} é o vértice onde essa aresta acaba.\\
+Assim, por exemplo, a aresta \textit{xab} é a aresta que vai do vértice A para
+o vértice B.\\
+Visto que cada variável representa o número de vezes que essa aresta foi percorrida e é
+necessário garantir que cada aresta é visitada pelo menos uma vez, um dos blocos de
+condições a que o modelo está sujeito afirmam que cada variável de decisão tem de ser maior
+ou igual a 1.
 
 \chapter{Texto de input}
 \verbatiminput{../solution.lp}
@@ -80,6 +108,8 @@ imagem:
 \bash[stdout]
 lp_solve ../solution.lp
 \END
+
+\chapter{Interpretação do resultado}
 
 \chapter{Conclusão}
 

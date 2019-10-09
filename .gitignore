@@ -246,3 +246,4 @@ TSWLatexianTemp*
 *.stderr
 *.sh
 *.pdf
+*.xcf
