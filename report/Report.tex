@@ -18,6 +18,7 @@ linkcolor=black}
 \usepackage{authblk}
 \usepackage{bashful}
 \usepackage{verbatim}
+\usepackage{amsmath}
 \usetikzlibrary{positioning,automata,decorations.markings}
 
 \begin{document}
@@ -59,11 +60,12 @@ regras definidas no enunciado, concluímos que a orientação das ruas é:
     \item B é igual a 6, logo é par, e por isso aponta para baixo;
     \item C é igual a 4, logo é par, e por isso aponta para a direita;
     \item D é igual a 3, logo é ímpar, e por isso aponta para cima;
-    \item E é igual a 5, logo é ímpar, e por isso aponta para a esquerda;
+    \item E é igual a 5, logo é ímpar, e por isso aponta para a 
+        esquerda;
 \end{enumerate}
 
-Assim, conclui-se que o problema a resolver é representado pela seguinte
-imagem:
+Assim, conclui-se que o problema a resolver é representado pela
+seguinte imagem:
 
 \begin{figure}[H]
     \begin{center}
@@ -73,9 +75,8 @@ imagem:
     \end{center}
 \end{figure}
 
-Após obter esta imagem decidi-mos nomear cada vértice do problema com uma
-letra maiúscula.
-Assim, o aspeto do desafio final utilizada é:
+Após obter esta imagem decidi-mos nomear cada vértice do problema com
+uma letra maiúscula. Assim, o aspeto do desafio final utilizada é:
 
 \begin{figure}[H]
     \begin{center}
@@ -92,14 +93,14 @@ As variáveis de decisão representam o número de vezes que um dado arco
 é percorrido. Por isso, é necessário que exista uma variável de decisão
 por cada aresta.\\
 A nomenclatura adaptada pelo grupo seguiu as seguintes regras.
-As arestas têm o nome \textit{xij} em que o \textit{i} é a aresta onde essa aresta começa
-e \textit{j} é o vértice onde essa aresta acaba.\\
-Assim, por exemplo, a aresta \textit{xab} é a aresta que vai do vértice A para
-o vértice B.\\
-Visto que cada variável representa o número de vezes que essa aresta foi percorrida e é
-necessário garantir que cada aresta é visitada pelo menos uma vez, um dos blocos de
-condições a que o modelo está sujeito afirmam que cada variável de decisão tem de ser maior
-ou igual a 1.
+As arestas têm o nome \textit{xij} em que o \textit{i} é a aresta onde
+essa aresta começa e \textit{j} é o vértice onde essa aresta acaba.\\
+Assim, por exemplo, a aresta \textit{xab} é a aresta que vai do 
+vértice A para o vértice B.\\
+Visto que cada variável representa o número de vezes que essa aresta
+foi percorrida e é necessário garantir que cada aresta é visitada pelo
+menos uma vez, um dos blocos de condições a que o modelo está sujeito
+afirma que cada variável de decisão tem de ser maior ou igual a 1.
 
 \chapter{Texto de input}
 \verbatiminput{../solution.lp}
@@ -110,6 +111,121 @@ lp_solve ../solution.lp
 \END
 
 \chapter{Interpretação do resultado}
+
+
+
+\chapter{Validação do modelo}
+\section{Tipo de variáveis}
+As variáveis têm de ser todas do tipo inteiro pois representam o número
+de vezes que essa aresta é atravessada.
+De facto, após analisar os resultados obtidos, todos os resultados são
+valores inteiros.\\
+Visto que é necessário que cada aresta seja visitada pelo menos uma
+vez, todas as variáveis têm de ter um valor maior ou igual a um, o
+que de facto se verifica.
+
+\section{Função objetivo}
+O resultado da função objetivo utilizada no modelo quando o valor
+das variáveis é manualmente substituido pela solução ótima tem de 
+coincidir com o resultado obtido.
+Assim:
+
+\begin{multline}
+13\times xla + 3\times xab + 4\times xbc + 12\times xcj + 4\times
+xjk + 4\times xkl + 4\times xkf + xfe + 2\times xed \\ + 6\times xdm +
+2\times xml + 3\times xad + 4\times xbf + 3\times xfh + 2\times xcg +
+3\times xgh + 2\times xhi + 3\times xij + 5\times xig + 4\times xme
+\end{multline}
+
+E substituido os vaores das variáveis de decisão:
+
+
+\begin{multline}
+13\times 4 + 3\times 3 + 4\times 2 + 12\times 1 + 4\times
+3 + 4\times 2 + 4\times 1 + 1 + 2\times 2 + 6\times 3 +
+2\times 2 + 3\times 1 \\ + 4\times 1 + 3\times 1 + 2\times 1 +
+3\times 2 + 2\times 3 + 3\times 2 + 5\times 1 + 4\times 1 
+= 171
+\end{multline}
+
+\section{Restrições}
+\begin{multline}
+A: xla - xad - xab = 0
+\Rightarrow 4 - 1 - 3 = 0 
+\Rightarrow 0 = 0
+\end{multline}
+
+\begin{multline}
+B: xab - xbf - xbc = 0 
+\Rightarrow 3 - 1 - 2 = 0
+\Rightarrow 0 = 0
+\end{multline}
+
+\begin{multline}
+C: xbc - xcg - xcj = 0
+\Rightarrow 2 - 1 - 1 = 0
+\Rightarrow 0 = 0
+\end{multline}
+
+\begin{multline}
+D: xad + xed - xdm = 0
+\Rightarrow 1 + 2 - 3 = 0
+\Rightarrow 0 = 0
+\end{multline}
+
+\begin{multline}
+E: xfe + xme - xed = 0
+\Rightarrow 1 + 1 - 2 = 0
+\Rightarrow 0 = 0
+\end{multline}
+
+\begin{multline}
+F: xbf + xkf - xfe - xfh = 0
+\Rightarrow 1 + 1 - 1 - 1 = 0
+\Rightarrow 0 = 0
+\end{multline}
+
+\begin{multline}
+G: xcg + xig - xgh = 0
+\Rightarrow 1 + 1 - 2 = 0
+\Rightarrow 0 = 0
+\end{multline}
+
+\begin{multline}
+H: xgh + xfh - xhi = 0
+\Rightarrow 2 + 1 - 3 = 0
+\Rightarrow 0 = 0
+\end{multline}
+
+\begin{multline}
+I: xhi - xig - xij = 0
+\Rightarrow 3 - 1 - 2 = 0
+\Rightarrow 0 = 0
+\end{multline}
+
+\begin{multline}
+J: xij + xcj - xjk = 0
+\Rightarrow 2 + 1 - 3 = 0
+\Rightarrow 0 = 0
+\end{multline}
+
+\begin{multline}
+K: xjk - xkf - xkl = 0
+\Rightarrow 3 - 1 - 2 = 0
+\Rightarrow 0 = 0
+\end{multline}
+
+\begin{multline}
+L: xml + xkl - xla = 0
+\Rightarrow 2 + 2 - 4 = 0
+\Rightarrow 0 = 0
+\end{multline}
+
+\begin{multline}
+M: xdm - xml - xme = 0
+\Rightarrow 3 - 2 1 = 0
+\Rightarrow 0 = 0
+\end{multline}
 
 \chapter{Conclusão}
 
