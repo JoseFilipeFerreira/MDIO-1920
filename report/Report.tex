@@ -48,6 +48,16 @@ linkcolor=black}
 \pagebreak
 
 \chapter{Introdução}
+Um dos prblemas \textit{NP-Completo} mais conhecido é o problema do
+Caixeiro viajante (\textit{Travelling Salesman Problem}). \\
+Quando transferido para um grafo orientado, este problema resume-se
+encontrar o caminho mais curto que visite todos os nodos do grafo.\\
+Outro problema derivado do problema do Caixeiro Viajante é o problema
+do carteiro chinês (\textit{Chinese Postman Problem}). Neste, a única
+diferença é que em vez de ser a caminho mais curto que visite todos
+os nodos, é o caminho mais curto que visite todas as arestas do grafo. \\
+Assim, o objetivo deste trabalho prático é resolver este problema
+utilizando programação linear.
 
 \chapter{Problema}
 Observando os números de inscrição dos membros do grupo, constatamos
@@ -102,6 +112,18 @@ foi percorrida e é necessário garantir que cada aresta é visitada pelo
 menos uma vez, um dos blocos de condições a que o modelo está sujeito
 afirma que cada variável de decisão tem de ser maior ou igual a 1.
 
+\section{Nodos}
+Para cada nodo no mapa, a soma de todas as vezes que se entra neste
+tem de ser igual à soma de todas as vezes que se sai.\\
+Assim, por exemplo, para o nodo A, o número de vezes que a aresta
+\textit{xla} é percorrida tem de ser igual ao número de vezes que
+as arestas \textit{xad} e \textit{xab} são percorridas.
+Logo, de forma a criar uma restrição para cada nodo, esta condição
+pode ser formulada como:\\
+\begin{multline}
+xla- xad - xab = 0 \\
+\end{multline}
+
 \chapter{Texto de input}
 \verbatiminput{../solution.lp}
 
@@ -112,7 +134,21 @@ lp_solve ../solution.lp
 
 \chapter{Interpretação do resultado}
 
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=0.9\textwidth]{images/desafioVisited.png}\par
+        \caption{representação da solução}
+        \label{fig:visited}
+    \end{center}
+\end{figure}
 
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=0.9\textwidth]{images/desafioSolucao.png}\par
+        \caption{representação do caminho}
+        \label{fig:path}
+    \end{center}
+\end{figure}
 
 \chapter{Validação do modelo}
 \section{Tipo de variáveis}
@@ -126,7 +162,7 @@ que de facto se verifica.
 
 \section{Função objetivo}
 O resultado da função objetivo utilizada no modelo quando o valor
-das variáveis é manualmente substituido pela solução ótima tem de 
+das variáveis é manualmente substituindo pela solução ótima tem de 
 coincidir com o resultado obtido.
 Assim:
 

@@ -1,5 +1,7 @@
 # MDIO-IO
-Travelling Salesman Problem (MDIO Assignment)
+Chinese postman problem (MDIO Assignment)
+
+A derivative of the Traveling Salesman Problem.
 
 ## Authors
 
