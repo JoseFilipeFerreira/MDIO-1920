@@ -134,6 +134,25 @@ lp_solve ../solution.lp
 
 \chapter{Interpretação do resultado}
 
+Para facilitar a descoberta e interpretação da solução ótima alteramos 
+o ponto inicial para o ponto A em vez da estrela. Esta alteração não altera 
+em nada o problema do enunciado, apenas evita termos mais um ponto que pode 
+ser ignorado.
+Como é mostrado no ficheiro .lp, foram criadas variáveis que representam os 
+nodos entre cada ponto, existindo apenas variáveis com as direções que nos 
+foram propostas. Então, uma variável xAB representa o número de vezes que 
+esse nodo foi percorrido.
+Na nossa solução reparamos que a variável xLA é igual a 4, o que quer dizer 
+que este nodo tem de ser percorrido 4 vezes e na ultima vez todos os outros 
+tem de ter sido no minimo percorridos uma vez. Sabendo isto desenvolvemos a 
+imagem {imagem da solução com os caminhos} com as quatro iterações da nossa 
+solução ótima tendo em atenção que, por uma variável ser maior que 1, não 
+significa que tenha sido percorrida as seguintes vezes só depois de ter passado 
+pelo ponto inicial. Além da imagem anterior também construimos, para uma 
+melhor compreensão da imagem com as iterações, a {imagem com as setas} que 
+nos facilitou a vizualização de por onde precisavamos passar para realizar 
+um caminho.
+
 \begin{figure}[H]
     \begin{center}
         \includegraphics[width=0.9\textwidth]{images/desafioVisited.png}\par
