@@ -125,33 +125,27 @@ xla- xad - xab = 0 \\
 \end{multline}
 
 \chapter{Texto de input}
+\label{input}
 \verbatiminput{../solution.lp}
 
 \chapter{Ficheiro de output}
+\label{output}
 \bash[stdout]
 lp_solve ../solution.lp
 \END
 
 \chapter{Interpretação do resultado}
 
-Para facilitar a descoberta e interpretação da solução ótima alteramos 
-o ponto inicial para o ponto A em vez da estrela. Esta alteração não altera 
-em nada o problema do enunciado, apenas evita termos mais um ponto que pode 
-ser ignorado.
-Como é mostrado no ficheiro .lp, foram criadas variáveis que representam os 
-nodos entre cada ponto, existindo apenas variáveis com as direções que nos 
-foram propostas. Então, uma variável xAB representa o número de vezes que 
-esse nodo foi percorrido.
-Na nossa solução reparamos que a variável xLA é igual a 4, o que quer dizer 
-que este nodo tem de ser percorrido 4 vezes e na ultima vez todos os outros 
-tem de ter sido no minimo percorridos uma vez. Sabendo isto desenvolvemos a 
-imagem {imagem da solução com os caminhos} com as quatro iterações da nossa 
-solução ótima tendo em atenção que, por uma variável ser maior que 1, não 
-significa que tenha sido percorrida as seguintes vezes só depois de ter passado 
-pelo ponto inicial. Além da imagem anterior também construimos, para uma 
-melhor compreensão da imagem com as iterações, a {imagem com as setas} que 
-nos facilitou a vizualização de por onde precisavamos passar para realizar 
-um caminho.
+Visto que a solução ótima é um circuito fechado, independentemente do ponto
+que se considere como o ponto inicial, este será sempre o mesmo. \\
+Assim, de forma a facilitar a interpretação dos resultados consideramos como ponto
+inicial o ponto A. Esta decisão em nada altera o problema.\\
+Como é mostrado no ficheiro .lp (Capitulo \ref{input}), foram criadas variáveis
+que representam as arestas entre cada nodo, existindo apenas variáveis com a direção 
+que foi indicada no enunciado. \\
+A fim de facilitar a visualização dos resultados obtidos decidimos criar uma
+imagem \ref{fig:visited} que indica para cada aresta o número de vezes que esta
+foi visitada.
 
 \begin{figure}[H]
     \begin{center}
@@ -160,6 +154,13 @@ um caminho.
         \label{fig:visited}
     \end{center}
 \end{figure}
+
+Na nossa solução (capitulo \ref{output}) a variável \textit{xla} é igual a 4, o
+que quer dizer que esta aresta foi percorrida 4 vezes e na ultima vez todos os
+outros tem de ter sido no mínimo percorridos uma vez. Sabendo isto desenvolvemos
+a imagem \ref{fig:path} com as quatro iterações da nossa solução ótima tendo em
+atenção que, por uma variável ser maior que 1, não significa que tenha sido
+percorrida as seguintes vezes só depois de ter passado pelo ponto inicial.
 
 \begin{figure}[H]
     \begin{center}
@@ -192,7 +193,7 @@ xjk + 4\times xkl + 4\times xkf + xfe + 2\times xed \\ + 6\times xdm +
 3\times xgh + 2\times xhi + 3\times xij + 5\times xig + 4\times xme
 \end{multline}
 
-E substituido os vaores das variáveis de decisão:
+E substituindo os valores das variáveis de decisão:
 
 
 \begin{multline}
