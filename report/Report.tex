@@ -20,6 +20,7 @@ linkcolor=black}
 \usepackage{verbatim}
 \usepackage{amsmath}
 \usetikzlibrary{positioning,automata,decorations.markings}
+\AfterEndEnvironment{figure}{\noindent\ignorespaces}
 
 \begin{document}
 
@@ -73,7 +74,6 @@ regras definidas no enunciado, concluímos que a orientação das ruas é:
     \item E é igual a 5, logo é ímpar, e por isso aponta para a 
         esquerda;
 \end{enumerate}
-
 Assim, conclui-se que o problema a resolver é representado pela
 seguinte imagem:
 
@@ -84,7 +84,6 @@ seguinte imagem:
         \label{fig:problem}
     \end{center}
 \end{figure}
-
 Após obter esta imagem decidi-mos nomear cada vértice do problema com
 uma letra maiúscula. Assim, o aspeto do desafio final utilizada é:
 
@@ -154,7 +153,6 @@ foi visitada.
         \label{fig:visited}
     \end{center}
 \end{figure}
-
 Na nossa solução (capitulo \ref{output}) a variável \textit{xla} é igual a 4, o
 que quer dizer que esta aresta foi percorrida 4 vezes e na ultima vez todos os
 outros tem de ter sido no mínimo percorridos uma vez. Sabendo isto desenvolvemos
@@ -169,7 +167,6 @@ percorrida as seguintes vezes só depois de ter passado pelo ponto inicial.
         \label{fig:path}
     \end{center}
 \end{figure}
-
 A fim de facilitar a interpretação da imagem, elaboramos uma legenda para cada
 um dos caminhos tomados:
 
