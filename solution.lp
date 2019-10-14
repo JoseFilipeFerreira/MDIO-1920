@@ -1,5 +1,5 @@
 min: 13 xla + 3 xab + 4 xbc + 12 xcj + 4 xjk + 4 xkl + 4 xkf +
- xfe + 2 xed + 6 xdm + 2 xml + 3 xad + 4 xbf + 3 xfh + 2 xcg +
+2 xfe + 2 xed + 6 xdm + 2 xml + 3 xad + 4 xbf + 3 xfh + 2 xcg +
  3 xgh + 2 xhi + 3 xij + 5 xig + 4 xme;
 
 A: xla - xad - xab = 0;
