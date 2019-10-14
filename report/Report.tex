@@ -24,7 +24,7 @@ linkcolor=black}
 
 \begin{document}
 
-\title{Trabalho 1\\ 
+\title{MDIO - Trabalho 1\\ 
 \large Grupo Nº 3}
 \author{João Teixeira (A85504) \and José Ferreira (A83683) \and Miguel Solino (A86435)}
 \date{\today}
@@ -79,7 +79,7 @@ seguinte imagem:
 
 \begin{figure}[H]
     \begin{center}
-        \includegraphics[width=0.5\textwidth]{images/desafio.png}\par
+        \includegraphics[width=0.9\textwidth]{images/desafio.png}\par
         \caption{representação do problema}
         \label{fig:problem}
     \end{center}
@@ -134,7 +134,6 @@ lp_solve ../solution.lp
 \END
 
 \chapter{Interpretação do resultado}
-
 Visto que a solução ótima é um circuito fechado, independentemente do ponto
 que se considere como o ponto inicial, este será sempre o mesmo. \\
 Assim, de forma a facilitar a interpretação dos resultados consideramos como ponto
@@ -148,17 +147,20 @@ foi visitada.
 
 \begin{figure}[H]
     \begin{center}
-        \includegraphics[width=0.9\textwidth]{images/desafioVisited.png}\par
+        \includegraphics[width=0.8\textwidth]{images/desafioVisited.png}\par
         \caption{representação da solução}
         \label{fig:visited}
     \end{center}
 \end{figure}
 Na nossa solução (capitulo \ref{output}) a variável \textit{xla} é igual a 4, o
 que quer dizer que esta aresta foi percorrida 4 vezes e na ultima vez todos os
-outros tem de ter sido no mínimo percorridos uma vez. Sabendo isto desenvolvemos
-a imagem \ref{fig:path} com as quatro iterações da nossa solução ótima tendo em
-atenção que, por uma variável ser maior que 1, não significa que tenha sido
-percorrida as seguintes vezes só depois de ter passado pelo ponto inicial.
+outros tem de ter sido no mínimo percorridos uma vez.\\
+Sabendo isto desenvolvemos a imagem \ref{fig:path} que contém o caminho ótimo
+calculado. Este, está dividido em quatro percursos distintos que começam e
+acabam em A.
+Um dos problemas encontrados no cálculo destes caminhos é que, o facto de uma
+aresta ter sido visitada uma vez durante o percurso não implica que não volte a
+ser visitada nesse mesmo percurso.
 
 \begin{figure}[H]
     \begin{center}
@@ -180,6 +182,8 @@ um dos caminhos tomados:
     \item Rosa: \\
     xAB → xAD → xDM→ xME → xED  → xDM → xML → xLA
 \end{enumerate}
+Estes caminhos distintos podem ser organizados e qualquer sequência que irão
+criar um percurso válido e sempre com o mesmo custo.
 
 \chapter{Validação do modelo}
 \section{Tipo de variáveis}
@@ -203,10 +207,7 @@ xjk + 4\times xkl + 4\times xkf + xfe + 2\times xed \\ + 6\times xdm +
 2\times xml + 3\times xad + 4\times xbf + 3\times xfh + 2\times xcg +
 3\times xgh + 2\times xhi + 3\times xij + 5\times xig + 4\times xme
 \end{multline}
-
 E substituindo os valores das variáveis de decisão:
-
-
 \begin{multline}
 13\times 4 + 3\times 3 + 4\times 2 + 12\times 1 + 4\times
 3 + 4\times 2 + 4\times 1 + 1 + 2\times 2 + 6\times 3 +
