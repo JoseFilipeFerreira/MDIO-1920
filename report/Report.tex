@@ -3,7 +3,7 @@
 \usepackage[portuguese]{babel}
 \usepackage{hyperref}
 \usepackage{a4wide}
-\hypersetup{pdftitle={Trabalho 1},
+\hypersetup{pdftitle={MDIO - Trabalho 1},
 pdfauthor={João Teixeira, José Ferreira, Miguel Solino},
 colorlinks=true,
 urlcolor=blue,
@@ -49,15 +49,23 @@ linkcolor=black}
 \pagebreak
 
 \chapter{Introdução}
-Um dos prblemas \textit{NP-Completo} mais conhecido é o problema do
-Caixeiro viajante (\textit{Travelling Salesman Problem}). \\
+Um dos problemas \textit{NP-Completo} mais conhecido é o \textit{Travelling
+Salesman Problem}). \\
+Neste problema, um vendedor tem um conjunto de cidades que pretende visitar. As
+estradas entre essas cidades e e a distancia destas também são conhecidas. O
+objetivo deste problema é calcular o caminho mais curto que visite todas as
+cidades.\\
 Quando transferido para um grafo orientado, este problema resume-se
 encontrar o caminho mais curto que visite todos os nodos do grafo.\\
-Outro problema derivado do problema do Caixeiro Viajante é o problema
-do carteiro chinês (\textit{Chinese Postman Problem}). Neste, a única
-diferença é que em vez de ser a caminho mais curto que visite todos
-os nodos, é o caminho mais curto que visite todas as arestas do grafo. \\
-Assim, o objetivo deste trabalho prático é resolver este problema
+Um problema derivado do \textit{Travelling Salesman Problem} é o \textit{Chinese
+Postman Problem}.\\
+Neste, um carteiro pretende entregar todas as cartas que têm, e para isso tem de
+passar em todas as ruas pelo menos uma vez. Com o objetivo de percorrer a menor
+distância possível.\\
+Quando transferido para um problema de grafos, a única diferença entre este
+problema e o problema do caixeiro viajante é que se pretende obter o caminho
+mais curto que visite todas as arestas de um grafo orientado. \\
+O objetivo deste trabalho prático é resolver este problema
 utilizando programação linear.
 
 \chapter{Problema}
@@ -134,6 +142,9 @@ lp_solve ../solution.lp
 \END
 
 \chapter{Interpretação do resultado}
+\label{solution}
+O valor da função objetivo é 171 logo, o que corresponde ao custo do percurso
+obtido.\\
 Visto que a solução ótima é um circuito fechado, independentemente do ponto
 que se considere como o ponto inicial, este será sempre o mesmo. \\
 Assim, de forma a facilitar a interpretação dos resultados consideramos como ponto
@@ -180,10 +191,19 @@ um dos caminhos tomados:
     \item Azul: \\
     xAB → xBF → xFH→ xHI  → xIJ → xJK  → xKL  → xLA
     \item Rosa: \\
-    xAB → xAD → xDM→ xME → xED  → xDM → xML → xLA
+    xAD → xDM → xME → xED  → xDM → xML → xLA
 \end{enumerate}
-Estes caminhos distintos podem ser organizados e qualquer sequência que irão
-criar um percurso válido e sempre com o mesmo custo.
+Visto que estes 4 segmentos da solução ótima começam e acabam no nodo A podem
+ser organizados por qualquer ordem que irá criar um percurso válido e sempre com
+o mesmo custo. Assim, qualquer combinação destes 4 percurso produz uma solução
+ótima válida para o problema apresentado.\\
+De forma a apresentar uma solução concreta, escolhemos o percurso que consiste em
+percorrer os segmentos da solução ótima pela ordem Verde → Amarelo → Azul →
+Rosa. Este corresponde ao percurso:\\
+xAB → xBC → xCJ → xJK → xKF → xFE → xED → xDM → xML → xLA →
+xAB → xBC → xCG → xGH → xHI  → xIG → xGH → xHI → xIJ → xJK  → xKL  → xLA →
+xAB → xBF → xFH→ xHI  → xIJ → xJK  → xKL  → xLA →
+xAD → xDM → xME → xED  → xDM → xML → xLA
 
 \chapter{Validação do modelo}
 \section{Tipo de variáveis}
@@ -296,5 +316,12 @@ M: xdm - xml - xme = 0
 \end{multline}
 
 \chapter{Conclusão}
+Concluindo, com este trabalho implementamos uma solução para o problema do
+Carteiro Chinês utilizando programação linear.\\
+A solução ótima obtida tem um custo de 171 e um dos percursos obtidos é (Capitulo \ref{solution}):\\
+xAB → xBC → xCJ → xJK → xKF → xFE → xED → xDM → xML → xLA →
+xAB → xBC → xCG → xGH → xHI  → xIG → xGH → xHI → xIJ → xJK  → xKL  → xLA →
+xAB → xBF → xFH→ xHI  → xIJ → xJK  → xKL  → xLA →
+xAD → xDM → xME → xED  → xDM → xML → xLA\\
 
 \end{document}
