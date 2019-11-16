@@ -68,7 +68,8 @@ mais curto que visite todas as arestas de um grafo orientado. \\
 O objetivo deste trabalho prático é resolver este problema
 utilizando programação linear.
 
-\chapter{Problema}
+\chapter{Parte I}
+\section{Problema}
 Observando os números de inscrição dos membros do grupo, constatamos
 que o maior pertencia ao aluno Miguel Solino (86435).
 Fazendo \textit{pattern matching} para o padrão ABCDE e seguindo as
@@ -92,7 +93,7 @@ seguinte imagem:
         \label{fig:problem}
     \end{center}
 \end{figure}
-Após obter esta imagem decidi-mos nomear cada vértice do problema com
+Após obter esta imagem decidimos nomear cada vértice do problema com
 uma letra maiúscula. Assim, o aspeto do desafio final utilizada é:
 
 \begin{figure}[H]
@@ -103,21 +104,20 @@ uma letra maiúscula. Assim, o aspeto do desafio final utilizada é:
     \end{center}
 \end{figure}
 
-\chapter{Formulação do Problema}
+\pagebreak
+\section{Formulação do Problema}
+Para esta primeira parte, o problema apresentado tem de ser formulado como um
+problema de transporte numa rede geral G = (V, A).
 
 \section{Variáveis de decisão}
-As variáveis de decisão representam o número de vezes que um dado arco
-é percorrido. Por isso, é necessário que exista uma variável de decisão
-por cada aresta.\\
-A nomenclatura adaptada pelo grupo seguiu as seguintes regras.
-As arestas têm o nome \textit{xij} em que o \textit{i} é a aresta onde
-essa aresta começa e \textit{j} é o vértice onde essa aresta acaba.\\
-Assim, por exemplo, a aresta \textit{xab} é a aresta que vai do 
-vértice A para o vértice B.\\
-Visto que cada variável representa o número de vezes que essa aresta
-foi percorrida e é necessário garantir que cada aresta é visitada pelo
-menos uma vez, um dos blocos de condições a que o modelo está sujeito
-afirma que cada variável de decisão tem de ser maior ou igual a 1.
+As variáveis de decisão seguem as seguintes regras.\\
+A variável de decisão \textit{xij} representa o número de vezes que o arco (i,
+j) foi percorrido.\\
+Como objetivo do problema é garantir que cada aresta é visitada pelo menos uma
+vez, é necessário garantir que cada variável de decisão é maior ou igual a 1. No
+entanto, o \textit{software} de resolução de problemas em rede normalmente
+apenas suporta arcos com um limite superior. Logo, é necessário fazer uma
+mudança de variável.
 
 \section{Nodos}
 Para cada nodo no mapa, a soma de todas as vezes que se entra neste
@@ -131,17 +131,20 @@ pode ser formulada como:\\
 xla- xad - xab = 0 \\
 \end{multline}
 
-\chapter{Texto de input}
+\pagebreak
+\section{Texto de input}
 \label{input}
 \verbatiminput{../solution.lp}
 
-\chapter{Ficheiro de output}
+\pagebreak
+\section{Ficheiro de output}
 \label{output}
 \bash[stdout]
 lp_solve ../solution.lp
 \END
 
-\chapter{Interpretação do resultado}
+\pagebreak
+\section{Interpretação do resultado}
 \label{solution}
 O valor da função objetivo é 172 logo, o que corresponde ao custo do percurso
 obtido.\\
@@ -205,8 +208,9 @@ xAB → xBC → xCG → xGH → xHI  → xIG → xGH → xHI → xIJ → xJK  �
 xAB → xBF → xFH→ xHI  → xIJ → xJK  → xKL  → xLA →
 xAD → xDM → xME → xED  → xDM → xML → xLA
 
-\chapter{Validação do modelo}
-\section{Tipo de variáveis}
+\pagebreak
+\section{Validação do modelo}
+\subsection{Tipo de variáveis}
 As variáveis têm de ser todas do tipo inteiro pois representam o número
 de vezes que essa aresta é atravessada.
 De facto, após analisar os resultados obtidos, todos os resultados são
@@ -215,7 +219,7 @@ Visto que é necessário que cada aresta seja visitada pelo menos uma
 vez, todas as variáveis têm de ter um valor maior ou igual a um, o
 que de facto se verifica.
 
-\section{Função objetivo}
+\subsection{Função objetivo}
 O resultado da função objetivo utilizada no modelo quando o valor
 das variáveis é manualmente substituindo pela solução ótima tem de 
 coincidir com o resultado obtido.
@@ -236,7 +240,7 @@ E substituindo os valores das variáveis de decisão:
 = 172
 \end{multline}
 
-\section{Restrições}
+\subsection{Restrições}
 \begin{multline}
 A: xla - xad - xab = 0
 \Rightarrow 4 - 1 - 3 = 0 
@@ -314,6 +318,11 @@ M: xdm - xml - xme = 0
 \Rightarrow 3 - 2 1 = 0
 \Rightarrow 0 = 0
 \end{multline}
+
+
+\chapter{Parte II}
+
+
 
 \chapter{Conclusão}
 Concluindo, com este trabalho implementamos uma solução para o problema do
