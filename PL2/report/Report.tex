@@ -65,8 +65,6 @@ distância possível.\\
 Quando transferido para um problema de grafos, a única diferença entre este
 problema e o problema do caixeiro viajante é que se pretende obter o caminho
 mais curto que visite todas as arestas de um grafo orientado. \\
-O objetivo deste trabalho prático é resolver este problema
-utilizando programação linear.
 
 \chapter{Parte I}
 \section{Problema}
@@ -106,42 +104,60 @@ uma letra maiúscula. Assim, o aspeto do desafio final utilizada é:
 
 \pagebreak
 \section{Formulação do Problema}
-Para esta primeira parte, o problema apresentado tem de ser formulado como um
-problema de transporte numa rede geral G = (V, A).
+Para esta primeira parte, o problema apresentado deve ser formulado como um
+problema de transporte numa rede geral \textit{G=(V, A)}.
 
-\section{Variáveis de decisão}
-As variáveis de decisão seguem as seguintes regras.\\
+\subsection{Arestas}
 A variável de decisão \textit{xij} representa o número de vezes que o arco (i,
 j) foi percorrido.\\
-Como objetivo do problema é garantir que cada aresta é visitada pelo menos uma
-vez, é necessário garantir que cada variável de decisão é maior ou igual a 1. No
-entanto, o \textit{software} de resolução de problemas em rede normalmente
-apenas suporta arcos com um limite superior. Logo, é necessário fazer uma
-mudança de variável.
+Visto que o objetivo deste problema é que cada aresta seja visitada pelo menos
+uma vez, é necessária a existencia de um bloco de condições que indiquem que
+\textit{xij >= 1}.\\
+No entanto, o \textit{software} de resolução de problemas em rede normalmente
+apenas suporta arcos com um limite superior. Assim, aplica-se a mudança de
+variável \textit{yij = xij - lij} em que \textit{lij} é o limite inferior de
+fluxo no arco (i, j).\\
+Aplicando esta mudança de variável à condição acima descrita obtemos que
+\textit{xij >= 1} é equivalente a \textit{yij >= 0}.
 
-\section{Nodos}
+\subsection{Nodos}
 Para cada nodo no mapa, a soma de todas as vezes que se entra neste
 tem de ser igual à soma de todas as vezes que se sai.\\
 Assim, por exemplo, para o nodo A, o número de vezes que a aresta
 \textit{xla} é percorrida tem de ser igual ao número de vezes que
 as arestas \textit{xad} e \textit{xab} são percorridas.
-Logo, de forma a criar uma restrição para cada nodo, esta condição
-pode ser formulada como:\\
+Por exemplo, de forma a criar uma restrição para o nodo A, esta pode ser
+formulada como:\\
 \begin{multline}
 xla- xad - xab = 0 \\
 \end{multline}
+Aplicando a mudança de variável:
+\begin{multline}
+(yla + 1) - (yad +1) - (yab +1) = 0 \\
+\end{multline}
+que pode ser simplificado para:
+\begin{multline}
+yla - yad - yab = 1\\
+\end{multline}
 
 \pagebreak
-\section{Texto de input}
+\section{Modelo de Programação Linear alterado}
 \label{input}
-\verbatiminput{../solution.lp}
+\verbatiminput{solution.lp}
 
-\pagebreak
-\section{Ficheiro de output}
-\label{output}
-\bash[stdout]
-lp_solve ../solution.lp
-\END
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 \pagebreak
 \section{Interpretação do resultado}
@@ -150,11 +166,11 @@ O valor da função objetivo é 172 logo, o que corresponde ao custo do percurso
 obtido.\\
 Visto que a solução ótima é um circuito fechado, independentemente do ponto
 que se considere como o ponto inicial, este será sempre o mesmo. \\
-Assim, de forma a facilitar a interpretação dos resultados consideramos como ponto
-inicial o ponto A. Esta decisão em nada altera o problema.\\
+Assim, de forma a facilitar a interpretação dos resultados consideramos como
+ponto inicial o ponto A. Esta decisão em nada altera o problema.\\
 Como é mostrado no ficheiro .lp (Capitulo \ref{input}), foram criadas variáveis
-que representam as arestas entre cada nodo, existindo apenas variáveis com a direção 
-que foi indicada no enunciado. \\
+que representam as arestas entre cada nodo, existindo apenas variáveis com a
+direção que foi indicada no enunciado. \\
 A fim de facilitar a visualização dos resultados obtidos decidimos criar uma
 imagem \ref{fig:visited} que indica para cada aresta o número de vezes que esta
 foi visitada.
