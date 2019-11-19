@@ -19,6 +19,12 @@ linkcolor=black}
 \usepackage{bashful}
 \usepackage{verbatim}
 \usepackage{amsmath}
+\usepackage{tikz}
+\usepackage{tikz,fullpage}
+\usetikzlibrary{arrows,%
+                petri,%
+                topaths}%
+\usepackage{tkz-berge}
 \usetikzlibrary{positioning,automata,decorations.markings}
 \AfterEndEnvironment{figure}{\noindent\ignorespaces}
 
@@ -147,30 +153,73 @@ que pode ser simplificado para:
 
 \pagebreak
 \section{Rede do Problema de Transporte}
-De forma a que o input gerado para o \textit{RELAX4} seja válido é necessário
-converter o nome dos nodos para números. Assim, o método utilizado é atribuir
-como número a cada nodo o valor da posição da letra no alfabeto.
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=1,transform shape]
+  \Vertex[x=0,y=10]{d}
+  \Vertex[x=0,y=8]{e}
+  \Vertex[x=0,y=6]{l}
+  \Vertex[x=0,y=4]{h}
+  \Vertex[x=0,y=2]{g}
+  \Vertex[x=0,y=0]{j}
 
+  \Vertex[x=5,y=6]{f}
+
+  \Vertex[x=10,y=10]{m}
+  \Vertex[x=10,y=8]{a}
+  \Vertex[x=10,y=6]{b}
+  \Vertex[x=10,y=4]{c}
+  \Vertex[x=10,y=2]{k}
+  \Vertex[x=10,y=0]{i}
+
+  \tikzstyle{LabelStyle}=[fill=gray!30]
+  \tikzstyle{EdgeStyle}=[post]
+  \Edge[label=$13$](l)(a)
+  \Edge[label=$3$](a)(b)
+  \Edge[label=$4$](b)(c)
+  \Edge[label=$12$](c)(j)
+  \Edge[label=$4$](j)(k)
+  \Edge[label=$4$](k)(l)
+  \Edge[label=$4$](k)(f)
+  \Edge[label=$2$](f)(e)
+  \Edge[label=$2$](e)(d)
+  \Edge[label=$6$](d)(m)
+  \Edge[label=$2$](m)(l)
+  \Edge[label=$3$](a)(d)
+  \Edge[label=$4$](b)(f)
+  \Edge[label=$3$](f)(h)
+  \Edge[label=$2$](c)(g)
+  \Edge[label=$3$](g)(h)
+  \Edge[label=$2$](h)(i)
+  \Edge[label=$3$](i)(j)
+  \Edge[label=$5$](i)(g)
+  \Edge[label=$4$](m)(e)
+\end{tikzpicture}
+\end{figure}
 
 \subsection{Valores de Oferta}
 \begin{itemize}
-    \item Nodo D : 1
-    \item Nodo E : 1
-    \item Nodo G : 1
-    \item Nodo H : 1
-    \item Nodo J : 1
-    \item Nodo L : 1
+    \item Nodo d : 1
+    \item Nodo e : 1
+    \item Nodo g : 1
+    \item Nodo h : 1
+    \item Nodo j : 1
+    \item Nodo k : 1
 \end{itemize}
 
 \subsection{Valores de Procura}
 \begin{itemize}
-    \item Nodo A : -1
-    \item Nodo B : -1
-    \item Nodo C : -1
-    \item Nodo I : -1
-    \item Nodo K : -1
-    \item Nodo M : -1
+    \item Nodo a : -1
+    \item Nodo b : -1
+    \item Nodo c : -1
+    \item Nodo i : -1
+    \item Nodo k : -1
+    \item Nodo m : -1
 \end{itemize}
+De forma a que o input gerado para o \textit{RELAX4} seja válido é necessário
+converter o nome dos nodos para números. Assim, o método utilizado é atribuir
+como número a cada nodo o valor da posição da letra no alfabeto.
+
 
 \pagebreak
 \section{Texto de Input}
