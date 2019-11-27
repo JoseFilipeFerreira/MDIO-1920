@@ -70,8 +70,8 @@ passar em todas as ruas pelo menos uma vez. Com o objetivo de percorrer a menor
 distância possível.\\
 Quando transferido para um problema de grafos, a única diferença entre este
 problema e o problema do caixeiro viajante é que se pretende obter o caminho
-mais curto que visite todas as arestas de um grafo orientado. \\
-O objetivo deste projeto é resolver este problema utilizando \textit{RELAX4}
+mais curto que visite todos os arcos de um grafo orientado. \\
+O objetivo deste projeto é resolver este problema utilizando \textit{RELAX4} e 
 
 \chapter{Parte I}
 \section{Problema}
@@ -117,22 +117,23 @@ problema de transporte numa rede geral \textit{G=(V, A)}.
 \subsection{Arestas}
 A variável de decisão \textit{xij} representa o número de vezes que o arco (i,
 j) foi percorrido.\\
-Visto que o objetivo deste problema é que cada aresta seja visitada pelo menos
+Visto que o objetivo deste problema é que cada arco seja visitado pelo menos
 uma vez, é necessária a existencia de um bloco de condições que indiquem que
 \textit{xij >= 1}.\\
 No entanto, o \textit{software} de resolução de problemas em rede normalmente
 apenas suporta arcos com um limite superior. Assim, aplica-se a mudança de
 variável \textit{yij = xij - lij} em que \textit{lij} é o limite inferior de
-fluxo no arco (i, j).\\
+fluxo no arco (i, j). Visto que o objetivo é visitar todas os arcos do grafo
+pelo menos uma vez esta é igual a 1.\\
 Aplicando esta mudança de variável à condição acima descrita obtemos que
 \textit{xij >= 1} é equivalente a \textit{yij >= 0}.
 
 \subsection{Nodos}
 Para cada nodo no mapa, a soma de todas as vezes que se entra neste
 tem de ser igual à soma de todas as vezes que se sai.\\
-Assim, por exemplo, para o nodo A, o número de vezes que a aresta
-\textit{xla} é percorrida tem de ser igual ao número de vezes que
-as arestas \textit{xad} e \textit{xab} são percorridas.
+Assim, por exemplo, para o nodo A, o número de vezes que o arco \textit{xla} é
+percorrido tem de ser igual ao número de vezes que os arcos \textit{xad} e
+\textit{xab} são percorridos.
 Por exemplo, de forma a criar uma restrição para o nodo A, esta pode ser
 formulada como:\\
 \begin{multline}
@@ -149,7 +150,7 @@ que pode ser simplificado para:
 
 \pagebreak
 \section{Modelo de Programação Linear alterado}
-\verbatiminput{solution.lp}
+\verbatiminput{solution.PT1.lp}
 
 \pagebreak
 \section{Rede do Problema de Transporte}
@@ -224,28 +225,28 @@ como número a cada nodo o valor da posição da letra no alfabeto.
 \pagebreak
 \section{Texto de Input}
 \label{input}
-\verbatiminput{RELAX4.INP}
+\verbatiminput{RELAX4.PT1.INP}
 
 \pagebreak
 \section{Texto de Output}
 \label{input}
-\verbatiminput{RELAX4.OUT}
+\verbatiminput{RELAX4.PT1.OUT}
 
 \pagebreak
 \section{Interpretação do resultado}
 \label{solution}
 O valor obtido com o recurso ao \textit{relax4} é 87 (primeira linha do texto de
-output). Uma vez que foi realizada uma mudança de variável, todas as arestas
-foram visitadas n+1 vez do que a que é indicada na solução. Logo, para obter o
-custo real do percurso obtido, é necessário somar ao valor obtido a soma de
-todos os custos das arestas do grafo.\\
+output). Uma vez que foi realizada uma mudança de variável, todos os arcos foram
+visitadas n+1 vez do que a que é indicada na solução. Logo, para obter o custo
+real do percurso obtido, é necessário somar ao valor obtido a soma de todos os
+custos dos arcos do grafo.\\
 Assim, o custo do percurso obtido é igual a 87 + 85, que é igual a 172.\\
 Visto que a solução ótima é um circuito fechado, independentemente do ponto
 que se considere como o ponto inicial, este será sempre o mesmo. \\
 Assim, de forma a facilitar a interpretação dos resultados consideramos como
 ponto inicial o ponto A. Esta decisão em nada altera o problema.\\
 A fim de facilitar a visualização dos resultados obtidos decidimos criar uma
-imagem \ref{fig:visited} que indica para cada aresta o número de vezes que esta
+imagem \ref{fig:visited} que indica para cada arco o número de vezes que este
 foi visitada.
 
 \begin{figure}[H]
@@ -256,14 +257,14 @@ foi visitada.
     \end{center}
 \end{figure}
 Na nossa solução (capitulo \ref{output}) a variável \textit{yla} é igual a 3, o
-que quer dizer que esta aresta foi percorrida 4 vezes e na ultima vez todos os
+que quer dizer que este arco foi percorrida 4 vezes e na ultima vez todos os
 outros tem de ter sido no mínimo percorridos uma vez.\\
 Sabendo isto desenvolvemos a imagem \ref{fig:path} que contém o caminho ótimo
 calculado. Este, está dividido em quatro percursos distintos que começam e
 acabam em A.\\
-Um dos problemas encontrados no cálculo destes caminhos é que uma aresta ter
-sido visitada uma vez durante o percurso não implica que não volte a ser
-visitada nesse mesmo percurso.
+Um dos problemas encontrados no cálculo destes caminhos é que um arco ter sido
+visitada uma vez durante o percurso não implica que não volte a ser visitada
+nesse mesmo percurso.
 
 \begin{figure}[H]
     \begin{center}
@@ -301,11 +302,11 @@ AD → DM → ME → ED  → DM → ML → LA
 \section{Validação do modelo}
 \subsection{Tipo de variáveis}
 As variáveis têm de ser todas do tipo inteiro pois representam o número
-de vezes que essa aresta é atravessada. De facto, após analisar os resultados
+de vezes que esse arco é atravessada. De facto, após analisar os resultados
 obtidos, todos os resultados são valores inteiros.\\
-Visto que é necessário que cada aresta seja visitada pelo menos uma
-vez, todas as variáveis têm de ter um valor maior ou igual a zero, o
-que de facto se verifica.
+Visto que é necessário que cada arco seja visitada pelo menos uma
+vez e ocorreu uma mudança de variável, todas as variáveis têm de ter um valor
+maior ou igual a zero, o que de facto se verifica.
 
 \subsection{Função objetivo}
 O resultado da função objetivo utilizada no modelo quando o valor
@@ -409,6 +410,8 @@ M: - ydm + yml + yme = -1
 
 
 \chapter{Parte II}
+\section{Grafo bipartido}
+
 
 
 
