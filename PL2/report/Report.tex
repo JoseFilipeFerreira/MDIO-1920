@@ -19,6 +19,12 @@ linkcolor=black}
 \usepackage{bashful}
 \usepackage{verbatim}
 \usepackage{amsmath}
+\usepackage{tikz}
+\usepackage{tikz,fullpage}
+\usetikzlibrary{arrows,%
+                petri,%
+                topaths}%
+\usepackage{tkz-berge}
 \usetikzlibrary{positioning,automata,decorations.markings}
 \AfterEndEnvironment{figure}{\noindent\ignorespaces}
 
@@ -64,11 +70,11 @@ passar em todas as ruas pelo menos uma vez. Com o objetivo de percorrer a menor
 distância possível.\\
 Quando transferido para um problema de grafos, a única diferença entre este
 problema e o problema do caixeiro viajante é que se pretende obter o caminho
-mais curto que visite todas as arestas de um grafo orientado. \\
-O objetivo deste trabalho prático é resolver este problema
-utilizando programação linear.
+mais curto que visite todos os arcos de um grafo orientado. \\
+O objetivo deste projeto é resolver este problema utilizando \textit{RELAX4} e 
 
-\chapter{Problema}
+\chapter{Parte I}
+\section{Problema}
 Observando os números de inscrição dos membros do grupo, constatamos
 que o maior pertencia ao aluno Miguel Solino (86435).
 Fazendo \textit{pattern matching} para o padrão ABCDE e seguindo as
@@ -92,7 +98,7 @@ seguinte imagem:
         \label{fig:problem}
     \end{center}
 \end{figure}
-Após obter esta imagem decidi-mos nomear cada vértice do problema com
+Após obter esta imagem decidimos nomear cada vértice do problema com
 uma letra maiúscula. Assim, o aspeto do desafio final utilizada é:
 
 \begin{figure}[H]
@@ -103,58 +109,90 @@ uma letra maiúscula. Assim, o aspeto do desafio final utilizada é:
     \end{center}
 \end{figure}
 
-\chapter{Formulação do Problema}
+\pagebreak
+\section{Formulação do Problema}
+Para esta primeira parte, o problema apresentado deve ser formulado como um
+problema de transporte numa rede geral \textit{G=(V, A)}.
 
-\section{Variáveis de decisão}
-As variáveis de decisão representam o número de vezes que um dado arco
-é percorrido. Por isso, é necessário que exista uma variável de decisão
-por cada aresta.\\
-A nomenclatura adaptada pelo grupo seguiu as seguintes regras.
-As arestas têm o nome \textit{xij} em que o \textit{i} é a aresta onde
-essa aresta começa e \textit{j} é o vértice onde essa aresta acaba.\\
-Assim, por exemplo, a aresta \textit{xab} é a aresta que vai do 
-vértice A para o vértice B.\\
-Visto que cada variável representa o número de vezes que essa aresta
-foi percorrida e é necessário garantir que cada aresta é visitada pelo
-menos uma vez, um dos blocos de condições a que o modelo está sujeito
-afirma que cada variável de decisão tem de ser maior ou igual a 1.
+\subsection{Arestas}
+A variável de decisão \textit{xij} representa o número de vezes que o arco (i,
+j) foi percorrido.\\
+Visto que o objetivo deste problema é que cada arco seja atravessado pelo menos
+uma vez, é necessária a existencia de um bloco de condições que indiquem que
+\textit{xij >= 1}.\\
+No entanto, o \textit{software} de resolução de problemas em rede normalmente
+apenas suporta arcos com um limite superior. Assim, aplica-se a mudança de
+variável \textit{yij = xij - lij} em que \textit{lij} é o limite inferior de
+fluxo no arco (i, j). Visto que o objetivo é visitar todas os arcos do grafo
+pelo menos uma vez esta é igual a 1.\\
+Aplicando esta mudança de variável à condição acima descrita obtemos que
+\textit{xij >= 1} é equivalente a \textit{yij >= 0}.
 
-\section{Nodos}
+\subsection{Nodos}
 Para cada nodo no mapa, a soma de todas as vezes que se entra neste
 tem de ser igual à soma de todas as vezes que se sai.\\
-Assim, por exemplo, para o nodo A, o número de vezes que a aresta
-\textit{xla} é percorrida tem de ser igual ao número de vezes que
-as arestas \textit{xad} e \textit{xab} são percorridas.
-Logo, de forma a criar uma restrição para cada nodo, esta condição
-pode ser formulada como:\\
+Assim, por exemplo, para o nodo A, o número de vezes que o arco \textit{xla} é
+percorrido tem de ser igual ao número de vezes que os arcos \textit{xad} e
+\textit{xab} são percorridos.
+Por exemplo, de forma a criar uma restrição para o nodo A, esta pode ser
+formulada como:\\
 \begin{multline}
-xla- xad - xab = 0 \\
+- xla + xad + xab = 0 \\
+\end{multline}
+Aplicando a mudança de variável:
+\begin{multline}
+- (yla + 1) + (yad +1) + (yab +1) = 0 \\
+\end{multline}
+que pode ser simplificado para:
+\begin{multline}
+- yla + yad + yab = -1\\
 \end{multline}
 
-\chapter{Texto de input}
+\pagebreak
+\section{Modelo de Programação Linear alterado}
+\verbatiminput{solution.PT1.lp}
+
+\pagebreak
+\section{Rede do Problema de Transporte}
+
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=0.9\textwidth]{images/redeTransporte.png}\par
+        \caption{rede do problema de transporte}
+        \label{fig:redeTransporte}
+    \end{center}
+\end{figure}
+De forma a que o input gerado para o \textit{RELAX4} seja válido é necessário
+converter o nome dos nodos para números. Assim, o método utilizado é atribuir
+como número a cada nodo o valor da posição da letra no alfabeto.
+
+
+\pagebreak
+\section{Texto de Input}
 \label{input}
-\verbatiminput{../solution.lp}
+\verbatiminput{RELAX4.PT1.INP}
 
-\chapter{Ficheiro de output}
+\pagebreak
+\section{Texto de Output}
 \label{output}
-\bash[stdout]
-lp_solve ../solution.lp
-\END
+\verbatiminput{RELAX4.PT1.OUT}
 
-\chapter{Interpretação do resultado}
+\pagebreak
+\section{Interpretação do resultado}
 \label{solution}
-O valor da função objetivo é 172 logo, o que corresponde ao custo do percurso
-obtido.\\
+O valor obtido com o recurso ao \textit{relax4} é 87 (primeira linha do texto de
+output). Uma vez que foi realizada uma mudança de variável, todos os arcos foram
+visitadas n+1 vez do que a que é indicada na solução. Logo, para obter o custo
+real do percurso obtido, é necessário somar ao valor obtido a soma de todos os
+custos dos arcos do grafo.\\
+Assim, o custo do percurso obtido é igual a 87 + 85, que é igual a 172.\\
 Visto que a solução ótima é um circuito fechado, independentemente do ponto
 que se considere como o ponto inicial, este será sempre o mesmo. \\
-Assim, de forma a facilitar a interpretação dos resultados consideramos como ponto
-inicial o ponto A. Esta decisão em nada altera o problema.\\
-Como é mostrado no ficheiro .lp (Capitulo \ref{input}), foram criadas variáveis
-que representam as arestas entre cada nodo, existindo apenas variáveis com a direção 
-que foi indicada no enunciado. \\
+Assim, de forma a facilitar a interpretação dos resultados consideramos como
+ponto inicial o ponto A. Esta decisão em nada altera o problema.\\
 A fim de facilitar a visualização dos resultados obtidos decidimos criar uma
-imagem \ref{fig:visited} que indica para cada aresta o número de vezes que esta
-foi visitada.
+imagem \ref{fig:visited} que indica para cada arco o número de vezes que este
+foi atravessado omitindo aqueles que nunca são atravessados.
 
 \begin{figure}[H]
     \begin{center}
@@ -163,166 +201,244 @@ foi visitada.
         \label{fig:visited}
     \end{center}
 \end{figure}
-Na nossa solução (capitulo \ref{output}) a variável \textit{xla} é igual a 4, o
-que quer dizer que esta aresta foi percorrida 4 vezes e na ultima vez todos os
-outros tem de ter sido no mínimo percorridos uma vez.\\
-Sabendo isto desenvolvemos a imagem \ref{fig:path} que contém o caminho ótimo
-calculado. Este, está dividido em quatro percursos distintos que começam e
-acabam em A.
-Um dos problemas encontrados no cálculo destes caminhos é que, o facto de uma
-aresta ter sido visitada uma vez durante o percurso não implica que não volte a
-ser visitada nesse mesmo percurso.
+Analisando esta imagem, conseguimos obter o conjunto ótimo de caminhos de
+reposicionamento entre os vértices de excesso e os vértices de defeito.
 
-\begin{figure}[H]
-    \begin{center}
-        \includegraphics[width=0.9\textwidth]{images/desafioSolucao.png}\par
-        \caption{representação do caminho}
-        \label{fig:path}
-    \end{center}
-\end{figure}
-A fim de facilitar a interpretação da imagem, elaboramos uma legenda para cada
-um dos caminhos tomados:
+\begin{itemize}
+        \item GH $\rightarrow$ HI
+        \item HI $\rightarrow$ IJ $\rightarrow$ JK
+        \item JK $\rightarrow$ KL $\rightarrow$ LA $\rightarrow$ AB $\rightarrow$ BC
+        \item LA $\rightarrow$ AB
+        \item ED $\rightarrow$ DM
+        \item DM $\rightarrow$ ML $\rightarrow$ LA
+\end{itemize}
 
-\begin{enumerate}
-    \item Verde: \\
-    xAB → xBC → xCJ → xJK → xKF → xFE → xED → xDM → xML → xLA
-    \item Amarelo: \\
-    xAB → xBC → xCG → xGH → xHI  → xIG → xGH → xHI → xIJ → xJK  → xKL  → xLA
-    \item Azul: \\
-    xAB → xBF → xFH→ xHI  → xIJ → xJK  → xKL  → xLA
-    \item Rosa: \\
-    xAD → xDM → xME → xED  → xDM → xML → xLA
-\end{enumerate}
-Visto que estes 4 segmentos da solução ótima começam e acabam no nodo A podem
-ser organizados por qualquer ordem que irá criar um percurso válido e sempre com
-o mesmo custo. Assim, qualquer combinação destes 4 percurso produz uma solução
-ótima válida para o problema apresentado.\\
-De forma a apresentar uma solução concreta, escolhemos o percurso que consiste em
-percorrer os segmentos da solução ótima pela ordem Verde → Amarelo → Azul →
-Rosa. Este corresponde ao percurso:\\
-xAB → xBC → xCJ → xJK → xKF → xFE → xED → xDM → xML → xLA →
-xAB → xBC → xCG → xGH → xHI  → xIG → xGH → xHI → xIJ → xJK  → xKL  → xLA →
-xAB → xBF → xFH→ xHI  → xIJ → xJK  → xKL  → xLA →
-xAD → xDM → xME → xED  → xDM → xML → xLA
-
-\chapter{Validação do modelo}
-\section{Tipo de variáveis}
+\pagebreak
+\section{Validação do modelo}
+\subsection{Tipo de variáveis}
 As variáveis têm de ser todas do tipo inteiro pois representam o número
-de vezes que essa aresta é atravessada.
-De facto, após analisar os resultados obtidos, todos os resultados são
-valores inteiros.\\
-Visto que é necessário que cada aresta seja visitada pelo menos uma
-vez, todas as variáveis têm de ter um valor maior ou igual a um, o
-que de facto se verifica.
+de vezes que esse arco é atravessada. De facto, após analisar os resultados
+obtidos, todos os resultados são valores inteiros.\\
+Visto que é necessário que cada arco seja visitada pelo menos uma
+vez e ocorreu uma mudança de variável, todas as variáveis têm de ter um valor
+maior ou igual a zero, o que de facto se verifica.
 
-\section{Função objetivo}
-O resultado da função objetivo utilizada no modelo quando o valor
-das variáveis é manualmente substituindo pela solução ótima tem de 
-coincidir com o resultado obtido.
-Assim:
+\subsection{Função objetivo}
+O resultado da função objetivo utilizada no modelo quando o valor das variáveis
+é manualmente substituindo pela solução ótima tem de coincidir com o resultado
+obtido. Assim:
 
 \begin{multline}
-13\times xla + 3\times xab + 4\times xbc + 12\times xcj + 4\times
-xjk + 4\times xkl + 4\times xkf + 2\times xfe + 2\times xed \\ + 6\times xdm +
-2\times xml + 3\times xad + 4\times xbf + 3\times xfh + 2\times xcg +
-3\times xgh + 2\times xhi + 3\times xij + 5\times xig + 4\times xme
+13\times yla + 3\times yab + 4\times ybc + 12\times ycj + 4\times
+yjk + 4\times ykl + 4\times ykf + 2\times yfe + 2\times yed \\ + 6\times ydm +
+2\times yml + 3\times yad + 4\times ybf + 3\times yfh + 2\times ycg +
+3\times ygh + 2\times yhi + 3\times yij + 5\times yig + 4\times yme + 85
 \end{multline}
 E substituindo os valores das variáveis de decisão:
 \begin{multline}
 13\times 4 + 3\times 3 + 4\times 2 + 12\times 1 + 4\times
 3 + 4\times 2 + 4\times 1 + 1 + 2\times 2 + 6\times 3 +
 2\times 2 + 3\times 1 \\ + 4\times 1 + 3\times 1 + 2\times 1 +
-3\times 2 + 2\times 3 + 3\times 2 + 5\times 1 + 4\times 1 
+3\times 2 + 2\times 3 + 3\times 2 + 5\times 1 + 4\times 1 + 85
 = 172
 \end{multline}
 
-\section{Restrições}
+\subsection{Restrições}
 \begin{multline}
-A: xla - xad - xab = 0
-\Rightarrow 4 - 1 - 3 = 0 
+A: - yla + yad + yab = -1
+\Rightarrow - 3 + 0 + 2 = -1 
+\Rightarrow -1 = -1
+\end{multline}
+
+\begin{multline}
+B: - yab + ybf + ybc = -1
+\Rightarrow - 2 + 0 + 1 = -1
+\Rightarrow -1 = -1
+\end{multline}
+
+\begin{multline}
+C: - ybc + ycg + ycj = -1
+\Rightarrow - 1 + 0 + 0 = -1
+\Rightarrow -1 = -1
+\end{multline}
+
+\begin{multline}
+D: - yad - yed + ydm = 1
+\Rightarrow - 0 - 1 + 2 = 1
+\Rightarrow 1 = 1
+\end{multline}
+
+\begin{multline}
+E: - yfe - yme + yed = 1
+\Rightarrow - 0 - 0 + 1 = 1
+\Rightarrow 1 = 1
+\end{multline}
+
+\begin{multline}
+F: - ybf - ykf + yfe + yfh = 0
+\Rightarrow - 0 - 0 + 0 + 0 = 0
 \Rightarrow 0 = 0
 \end{multline}
 
 \begin{multline}
-B: xab - xbf - xbc = 0 
-\Rightarrow 3 - 1 - 2 = 0
-\Rightarrow 0 = 0
+G: - ycg - yig + ygh = 1
+\Rightarrow - 0 - 0 + 1 = 1
+\Rightarrow 1 = 1
 \end{multline}
 
 \begin{multline}
-C: xbc - xcg - xcj = 0
-\Rightarrow 2 - 1 - 1 = 0
-\Rightarrow 0 = 0
+H: - ygh - yfh + yhi = 1
+\Rightarrow - 1 - 0 + 2 = 1
+\Rightarrow 1 = 1
 \end{multline}
 
 \begin{multline}
-D: xad + xed - xdm = 0
-\Rightarrow 1 + 2 - 3 = 0
-\Rightarrow 0 = 0
+I: - yhi + yig + yij = -1
+\Rightarrow - 2 + 0 + 1 = -1
+\Rightarrow -1 = -1
 \end{multline}
 
 \begin{multline}
-E: xfe + xme - xed = 0
-\Rightarrow 1 + 1 - 2 = 0
-\Rightarrow 0 = 0
+J: - yij - ycj + yjk = 1
+\Rightarrow - 1 - 0 + 2 = 1
+\Rightarrow 1 = 1
 \end{multline}
 
 \begin{multline}
-F: xbf + xkf - xfe - xfh = 0
-\Rightarrow 1 + 1 - 1 - 1 = 0
-\Rightarrow 0 = 0
+K: - yjk + ykf + ykl = -1
+\Rightarrow - 2 + 0 + 1 = -1
+\Rightarrow -1 = -1
 \end{multline}
 
 \begin{multline}
-G: xcg + xig - xgh = 0
-\Rightarrow 1 + 1 - 2 = 0
-\Rightarrow 0 = 0
+L: - yml - ykl + yla = 1
+\Rightarrow - 1 - 1 + 3 = 1
+\Rightarrow 1 = 1
 \end{multline}
 
 \begin{multline}
-H: xgh + xfh - xhi = 0
-\Rightarrow 2 + 1 - 3 = 0
-\Rightarrow 0 = 0
+M: - ydm + yml + yme = -1
+\Rightarrow - 2 + 1 + 0 = -1
+\Rightarrow -1 = -1
 \end{multline}
 
-\begin{multline}
-I: xhi - xig - xij = 0
-\Rightarrow 3 - 1 - 2 = 0
-\Rightarrow 0 = 0
-\end{multline}
 
-\begin{multline}
-J: xij + xcj - xjk = 0
-\Rightarrow 2 + 1 - 3 = 0
-\Rightarrow 0 = 0
-\end{multline}
+\chapter{Parte II}
+\pagebreak
+\section{Grafo bipartido}
 
-\begin{multline}
-K: xjk - xkf - xkl = 0
-\Rightarrow 3 - 1 - 2 = 0
-\Rightarrow 0 = 0
-\end{multline}
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=1,transform shape]
+  \Vertex[x=0,y=10]{d}
+  \Vertex[x=0,y=8]{e}
+  \Vertex[x=0,y=6]{l}
+  \Vertex[x=0,y=4]{h}
+  \Vertex[x=0,y=2]{g}
+  \Vertex[x=0,y=0]{j}
 
-\begin{multline}
-L: xml + xkl - xla = 0
-\Rightarrow 2 + 2 - 4 = 0
-\Rightarrow 0 = 0
-\end{multline}
+  \Vertex[x=5,y=6]{f}
 
-\begin{multline}
-M: xdm - xml - xme = 0
-\Rightarrow 3 - 2 1 = 0
-\Rightarrow 0 = 0
-\end{multline}
+  \Vertex[x=10,y=10]{m}
+  \Vertex[x=10,y=8]{a}
+  \Vertex[x=10,y=6]{b}
+  \Vertex[x=10,y=4]{c}
+  \Vertex[x=10,y=2]{k}
+  \Vertex[x=10,y=0]{i}
+
+  \tikzstyle{LabelStyle}=[fill=gray!30]
+  \tikzstyle{EdgeStyle}=[post]
+  \Edge[label=$13$](l)(a)
+  \Edge[label=$3$](a)(b)
+  \Edge[label=$4$](b)(c)
+  \Edge[label=$12$](c)(j)
+  \Edge[label=$4$](j)(k)
+  \Edge[label=$4$](k)(l)
+  \Edge[label=$4$](k)(f)
+  \Edge[label=$2$](f)(e)
+  \Edge[label=$2$](e)(d)
+  \Edge[label=$6$](d)(m)
+  \Edge[label=$2$](m)(l)
+  \Edge[label=$3$](a)(d)
+  \Edge[label=$4$](b)(f)
+  \Edge[label=$3$](f)(h)
+  \Edge[label=$2$](c)(g)
+  \Edge[label=$3$](g)(h)
+  \Edge[label=$2$](h)(i)
+  \Edge[label=$3$](i)(j)
+  \Edge[label=$5$](i)(g)
+  \Edge[label=$4$](m)(e)
+\end{tikzpicture}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=1,transform shape]
+  \Vertex[x=0,y=10]{d}
+  \Vertex[x=0,y=8]{e}
+  \Vertex[x=0,y=6]{l}
+  \Vertex[x=0,y=4]{h}
+  \Vertex[x=0,y=2]{g}
+  \Vertex[x=0,y=0]{j}
+
+  \Vertex[x=10,y=10]{m}
+  \Vertex[x=10,y=8]{a}
+  \Vertex[x=10,y=6]{b}
+  \Vertex[x=10,y=4]{c}
+  \Vertex[x=10,y=2]{k}
+  \Vertex[x=10,y=0]{i}
+
+  \tikzstyle{LabelStyle}=[fill=gray!30]
+  \tikzstyle{EdgeStyle}=[post]
+  \Edge[label=$13$](d)(m)
+  \Edge[label=$13$](d)(a)
+  \Edge[label=$13$](d)(b)
+  \Edge[label=$13$](d)(c)
+  \Edge[label=$13$](d)(k)
+  \Edge[label=$13$](d)(i)
+  \Edge[label=$13$](e)(m)
+  \Edge[label=$13$](e)(a)
+  \Edge[label=$13$](e)(b)
+  \Edge[label=$13$](e)(c)
+  \Edge[label=$13$](e)(k)
+  \Edge[label=$13$](e)(i)
+  \Edge[label=$13$](l)(m)
+  \Edge[label=$13$](l)(a)
+  \Edge[label=$13$](l)(b)
+  \Edge[label=$13$](l)(c)
+  \Edge[label=$13$](l)(k)
+  \Edge[label=$13$](l)(i)
+  \Edge[label=$13$](h)(m)
+  \Edge[label=$13$](h)(a)
+  \Edge[label=$13$](h)(b)
+  \Edge[label=$13$](h)(c)
+  \Edge[label=$13$](h)(k)
+  \Edge[label=$13$](h)(i)
+  \Edge[label=$13$](g)(m)
+  \Edge[label=$13$](g)(a)
+  \Edge[label=$13$](g)(b)
+  \Edge[label=$13$](g)(c)
+  \Edge[label=$13$](g)(k)
+  \Edge[label=$13$](g)(i)
+  \Edge[label=$13$](j)(m)
+  \Edge[label=$13$](j)(a)
+  \Edge[label=$13$](j)(b)
+  \Edge[label=$13$](j)(c)
+  \Edge[label=$13$](j)(k)
+  \Edge[label=$13$](j)(i)
+\end{tikzpicture}
+\end{figure}
+
+
 
 \chapter{Conclusão}
 Concluindo, com este trabalho implementamos uma solução para o problema do
 Carteiro Chinês utilizando programação linear.\\
 A solução ótima obtida tem uma distância total de 172 centímetros e um dos
 percursos obtidos é (Capitulo \ref{solution}):\\
-xAB → xBC → xCJ → xJK → xKF → xFE → xED → xDM → xML → xLA →
-xAB → xBC → xCG → xGH → xHI  → xIG → xGH → xHI → xIJ → xJK  → xKL  → xLA →
-xAB → xBF → xFH→ xHI  → xIJ → xJK  → xKL  → xLA →
-xAD → xDM → xME → xED  → xDM → xML → xLA\\
+AB → BC → CJ → JK → KF → FE → ED → DM → ML → LA →
+AB → BC → CG → GH → HI  → IG → GH → HI → IJ → JK  → KL  → LA →
+AB → BF → FH→ HI  → IJ → JK  → KL  → LA →
+AD → DM → ME → ED  → DM → ML → LA\\
 
 \end{document}
