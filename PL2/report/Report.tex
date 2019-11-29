@@ -71,7 +71,11 @@ distância possível.\\
 Quando transferido para um problema de grafos, a única diferença entre este
 problema e o problema do caixeiro viajante é que se pretende obter o caminho
 mais curto que visite todos os arcos de um grafo orientado. \\
-O objetivo deste projeto é resolver este problema utilizando \textit{RELAX4} e 
+O objetivo deste projeto é calcular o conjunto óptimo de caminhos de reposicionamento
+do veículo entre os vértices de excesso e os vértices de defeito. Na primeira
+parte este problema é formulado como um problema de transporte numa rede geral e
+na segunda é formulado como um modelo de minimização.
+Os problemas de redes foram resolvidos utilizando \textit{RELAX4}.
 
 \chapter{Parte I}
 \section{Problema}
@@ -118,7 +122,7 @@ problema de transporte numa rede geral \textit{G=(V, A)}.
 A variável de decisão \textit{xij} representa o número de vezes que o arco (i,
 j) foi percorrido.\\
 Visto que o objetivo deste problema é que cada arco seja atravessado pelo menos
-uma vez, é necessária a existencia de um bloco de condições que indiquem que
+uma vez, é necessária a existência de um bloco de condições que indiquem que
 \textit{xij >= 1}.\\
 No entanto, o \textit{software} de resolução de problemas em rede normalmente
 apenas suporta arcos com um limite superior. Assim, aplica-se a mudança de
@@ -166,7 +170,6 @@ De forma a que o input gerado para o \textit{RELAX4} seja válido é necessário
 converter o nome dos nodos para números. Assim, o método utilizado é atribuir
 como número a cada nodo o valor da posição da letra no alfabeto.
 
-
 \pagebreak
 \section{Texto de Input}
 \label{input}
@@ -180,16 +183,12 @@ como número a cada nodo o valor da posição da letra no alfabeto.
 \pagebreak
 \section{Interpretação do resultado}
 \label{solution}
-O valor obtido com o recurso ao \textit{relax4} é 87 (primeira linha do texto de
-output). Uma vez que foi realizada uma mudança de variável, todos os arcos foram
-visitadas n+1 vez do que a que é indicada na solução. Logo, para obter o custo
-real do percurso obtido, é necessário somar ao valor obtido a soma de todos os
-custos dos arcos do grafo.\\
+O valor obtido ótimo com recurso ao \textit{relax4} é 87 (primeira linha do
+texto de output). Uma vez que foi realizada uma mudança de variável, todos os
+arcos foram visitadas n+1 vez do que a que é indicada na solução. Logo, para
+obter o custo real do percurso obtido, é necessário somar ao valor obtido a soma
+de todos os custos dos arcos do grafo.\\
 Assim, o custo do percurso obtido é igual a 87 + 85, que é igual a 172.\\
-Visto que a solução ótima é um circuito fechado, independentemente do ponto
-que se considere como o ponto inicial, este será sempre o mesmo. \\
-Assim, de forma a facilitar a interpretação dos resultados consideramos como
-ponto inicial o ponto A. Esta decisão em nada altera o problema.\\
 A fim de facilitar a visualização dos resultados obtidos decidimos criar uma
 imagem \ref{fig:visited} que indica para cada arco o número de vezes que este
 foi atravessado omitindo aqueles que nunca são atravessados.
@@ -324,53 +323,7 @@ M: - ydm + yml + yme = -1
 
 
 \chapter{Parte II}
-\pagebreak
 \section{Grafo bipartido}
-
-\begin{figure}[H]
-\centering
-\begin{tikzpicture}[scale=1,transform shape]
-  \Vertex[x=0,y=10]{d}
-  \Vertex[x=0,y=8]{e}
-  \Vertex[x=0,y=6]{l}
-  \Vertex[x=0,y=4]{h}
-  \Vertex[x=0,y=2]{g}
-  \Vertex[x=0,y=0]{j}
-
-  \Vertex[x=5,y=6]{f}
-
-  \Vertex[x=10,y=10]{m}
-  \Vertex[x=10,y=8]{a}
-  \Vertex[x=10,y=6]{b}
-  \Vertex[x=10,y=4]{c}
-  \Vertex[x=10,y=2]{k}
-  \Vertex[x=10,y=0]{i}
-
-  \tikzstyle{LabelStyle}=[fill=gray!30]
-  \tikzstyle{EdgeStyle}=[post]
-  \Edge[label=$13$](l)(a)
-  \Edge[label=$3$](a)(b)
-  \Edge[label=$4$](b)(c)
-  \Edge[label=$12$](c)(j)
-  \Edge[label=$4$](j)(k)
-  \Edge[label=$4$](k)(l)
-  \Edge[label=$4$](k)(f)
-  \Edge[label=$2$](f)(e)
-  \Edge[label=$2$](e)(d)
-  \Edge[label=$6$](d)(m)
-  \Edge[label=$2$](m)(l)
-  \Edge[label=$3$](a)(d)
-  \Edge[label=$4$](b)(f)
-  \Edge[label=$3$](f)(h)
-  \Edge[label=$2$](c)(g)
-  \Edge[label=$3$](g)(h)
-  \Edge[label=$2$](h)(i)
-  \Edge[label=$3$](i)(j)
-  \Edge[label=$5$](i)(g)
-  \Edge[label=$4$](m)(e)
-\end{tikzpicture}
-\end{figure}
-
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}[scale=1,transform shape]
@@ -390,55 +343,164 @@ M: - ydm + yml + yme = -1
 
   \tikzstyle{LabelStyle}=[fill=gray!30]
   \tikzstyle{EdgeStyle}=[post]
-  \Edge[label=$13$](d)(m)
-  \Edge[label=$13$](d)(a)
-  \Edge[label=$13$](d)(b)
-  \Edge[label=$13$](d)(c)
-  \Edge[label=$13$](d)(k)
-  \Edge[label=$13$](d)(i)
-  \Edge[label=$13$](e)(m)
-  \Edge[label=$13$](e)(a)
-  \Edge[label=$13$](e)(b)
-  \Edge[label=$13$](e)(c)
-  \Edge[label=$13$](e)(k)
-  \Edge[label=$13$](e)(i)
-  \Edge[label=$13$](l)(m)
-  \Edge[label=$13$](l)(a)
-  \Edge[label=$13$](l)(b)
-  \Edge[label=$13$](l)(c)
-  \Edge[label=$13$](l)(k)
-  \Edge[label=$13$](l)(i)
-  \Edge[label=$13$](h)(m)
-  \Edge[label=$13$](h)(a)
-  \Edge[label=$13$](h)(b)
-  \Edge[label=$13$](h)(c)
-  \Edge[label=$13$](h)(k)
-  \Edge[label=$13$](h)(i)
-  \Edge[label=$13$](g)(m)
-  \Edge[label=$13$](g)(a)
-  \Edge[label=$13$](g)(b)
-  \Edge[label=$13$](g)(c)
-  \Edge[label=$13$](g)(k)
-  \Edge[label=$13$](g)(i)
-  \Edge[label=$13$](j)(m)
-  \Edge[label=$13$](j)(a)
-  \Edge[label=$13$](j)(b)
-  \Edge[label=$13$](j)(c)
-  \Edge[label=$13$](j)(k)
-  \Edge[label=$13$](j)(i)
+  \Edge(d)(m)
+  \Edge(d)(a)
+  \Edge(d)(b)
+  \Edge(d)(c)
+  \Edge(d)(k)
+  \Edge(d)(i)
+  \Edge(e)(m)
+  \Edge(e)(a)
+  \Edge(e)(b)
+  \Edge(e)(c)
+  \Edge(e)(k)
+  \Edge(e)(i)
+  \Edge(l)(m)
+  \Edge(l)(a)
+  \Edge(l)(b)
+  \Edge(l)(c)
+  \Edge(l)(k)
+  \Edge(l)(i)
+  \Edge(h)(m)
+  \Edge(h)(a)
+  \Edge(h)(b)
+  \Edge(h)(c)
+  \Edge(h)(k)
+  \Edge(h)(i)
+  \Edge(g)(m)
+  \Edge(g)(a)
+  \Edge(g)(b)
+  \Edge(g)(c)
+  \Edge(g)(k)
+  \Edge(g)(i)
+  \Edge(j)(m)
+  \Edge(j)(a)
+  \Edge(j)(b)
+  \Edge(j)(c)
+  \Edge(j)(k)
+  \Edge(j)(i)
 \end{tikzpicture}
 \end{figure}
 
+\begin{table}[H]
+\begin{tabular}{|l|l|l|l|l|l|l|}
+\hline
+exc./def. & M         & A       & B        & C         & K            & I         \\ \hline
+D          & DM        & DMLA    & DMLAB    & DMLABC    & DMLABFHIJK   & DMLABFHI  \\ \hline
+E          & EDM       & EDMLA   & EDMLAB   & EDMLABC   & EDMLABFHIJK  & EDMLABFHI \\ \hline
+L          & LADM      & LA      & LAB      & LABC      & LABFHIJK     & LABFHI    \\ \hline
+H          & HIJKFEDM  & HIJKLA  & HIJKLAB  & HIJKLABC  & HIJK         & HI        \\ \hline
+G          & GHIJKFEDM & GHIJKLA & GHIJKLAB & GHIJKLABC & GHIJK        & GHI       \\ \hline
+J          & JKFEDM    & JKLA    & JKLAB    & JKLABC    & JK           & JKFHI     \\ \hline 
+\end{tabular}
+    \caption{caminhos mais curtos para cada arco (obtidos por inspeção)}
+\end{table}
 
+\begin{table}[H]
+\begin{tabular}{|l|l|l|l|l|l|l|}
+\hline
+exc./def. & M  & A  & B  & C  & K  & I  \\ \hline
+D          & 6  & 21 & 24 & 28 & 40 & 33 \\ \hline
+E          & 8  & 23 & 26 & 30 & 42 & 35 \\ \hline
+L          & 22 & 13 & 16 & 20 & 32 & 25 \\ \hline
+H          & 23 & 26 & 29 & 33 & 9  & 2  \\ \hline
+G          & 26 & 29 & 32 & 36 & 12 & 5  \\ \hline
+J          & 18 & 21 & 24 & 28 & 4  & 13 \\ \hline 
+\end{tabular}
+\caption{custo do caminho entre cada arco}
+\end{table}
+Visto que de todos os vértices de excesso sai um caminho para um vértice de
+defeito, o número total de caminhos que saem dos vértices de excesso é igual ao
+número de caminhos que chegam aos vértices de defeito, logo o problema é
+balanceado.\\
+Tal como na primeira parte do trabalho, de forma a que o input gerado para o
+\textit{RELAX4} seja válido, é necessário converter o nome dos nodos para
+números. Assim, o método utilizado é atribuir como número a cada nodo o valor da
+posição da letra no alfabeto.
+
+\pagebreak
+\section{Texto de Input}
+\label{input2}
+\verbatiminput{RELAX4.PT2.INP}
+
+\pagebreak
+\section{Texto de Output}
+\label{output2}
+\verbatiminput{RELAX4.PT2.OUT}
+
+\pagebreak
+\section{Interpretação do resultado}
+\label{solution}
+Tal como na primeira parte, o valor obtido com recurso ao \textit{relax4} é 87
+(primeira linha do texto de output). Uma vez que o modelo de minimização
+consiste em determinar os caminhos adicionais a realizar de modo a minimizar a
+soma dos seus custos. O custo do caminho calculado é igual a 87 + 85, que é
+igual a 172.\\
+A fim de facilitar a visualização dos resultados obtidos decidimos criar um
+grafo que indica para cada arco o número de vezes que este foi atravessado
+omitindo aqueles que nunca são atravessados.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=1,transform shape]
+  \Vertex[x=0,y=10]{d}
+  \Vertex[x=0,y=8]{e}
+  \Vertex[x=0,y=6]{l}
+  \Vertex[x=0,y=4]{h}
+  \Vertex[x=0,y=2]{g}
+  \Vertex[x=0,y=0]{j}
+
+  \Vertex[x=10,y=10]{m}
+  \Vertex[x=10,y=8]{a}
+  \Vertex[x=10,y=6]{b}
+  \Vertex[x=10,y=4]{c}
+  \Vertex[x=10,y=2]{k}
+  \Vertex[x=10,y=0]{i}
+
+  \tikzstyle{LabelStyle}=[fill=gray!30]
+  \tikzstyle{EdgeStyle}=[post]
+  \Edge(d)(c)
+  \Edge(e)(m)
+  \Edge(l)(a)
+  \Edge(h)(i)
+  \Edge(g)(b)
+  \Edge(j)(k)
+\end{tikzpicture}
+\end{figure}
+Assim, o conjunto ótimo de caminhos de reposicionamento entre os vértices de
+excesso e os vértices de defeito.
+
+\begin{itemize}
+        \item DM $\rightarrow$ ML $\rightarrow$ LA $\rightarrow$ AB $\rightarrow$ BC
+        \item ED $\rightarrow$ DM 
+        \item LA
+        \item HI
+        \item GH $\rightarrow$ HI $\rightarrow$ IJ $\rightarrow$ JK $\rightarrow$ KL $\rightarrow$ LA $\rightarrow$ AB
+        \item JK
+\end{itemize}
 
 \chapter{Conclusão}
-Concluindo, com este trabalho implementamos uma solução para o problema do
-Carteiro Chinês utilizando programação linear.\\
-A solução ótima obtida tem uma distância total de 172 centímetros e um dos
-percursos obtidos é (Capitulo \ref{solution}):\\
-AB → BC → CJ → JK → KF → FE → ED → DM → ML → LA →
-AB → BC → CG → GH → HI  → IG → GH → HI → IJ → JK  → KL  → LA →
-AB → BF → FH→ HI  → IJ → JK  → KL  → LA →
-AD → DM → ME → ED  → DM → ML → LA\\
+Concluindo, com este trabalho implementamos dois métodos distintos de calcular
+o conjunto ótimo de caminhos de reposicionamento entre os vértices de excesso e
+os vértices de defeito.\\
+Na parte I obtemos o conjunto de caminhos:
+\begin{itemize}
+        \item GH $\rightarrow$ HI
+        \item HI $\rightarrow$ IJ $\rightarrow$ JK
+        \item JK $\rightarrow$ KL $\rightarrow$ LA $\rightarrow$ AB $\rightarrow$ BC
+        \item LA $\rightarrow$ AB
+        \item ED $\rightarrow$ DM
+        \item DM $\rightarrow$ ML $\rightarrow$ LA
+\end{itemize}
+Na parte II obtemos o conjunto de caminhos:
+\begin{itemize}
+        \item DM $\rightarrow$ ML $\rightarrow$ LA $\rightarrow$ AB $\rightarrow$ BC
+        \item ED $\rightarrow$ DM 
+        \item LA
+        \item HI
+        \item GH $\rightarrow$ HI $\rightarrow$ IJ $\rightarrow$ JK $\rightarrow$ KL $\rightarrow$ LA $\rightarrow$ AB
+        \item JK
+\end{itemize}
+Para ambos, o custo total dos caminhos de reposicionamento é 87.
 
 \end{document}

@@ -2,6 +2,7 @@
 
 ## Index
 * [Linear Programming](PL1)
+* [Relax4](PL2)
 
 ## Authors
 * [João Teixeira](https://github.com/jtexeira)
