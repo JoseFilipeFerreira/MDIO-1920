@@ -27,6 +27,7 @@ linkcolor=black}
 \usepackage{tkz-berge}
 \usetikzlibrary{positioning,automata,decorations.markings}
 \AfterEndEnvironment{figure}{\noindent\ignorespaces}
+\AfterEndEnvironment{table}{\noindent\ignorespaces}
 
 \begin{document}
 
@@ -123,14 +124,14 @@ A variável de decisão \textit{xij} representa o número de vezes que o arco (i
 j) foi percorrido.\\
 Visto que o objetivo deste problema é que cada arco seja atravessado pelo menos
 uma vez, é necessária a existência de um bloco de condições que indiquem que
-\textit{xij >= 1}.\\
+\textit{xij \textgreater= 1}.\\
 No entanto, o \textit{software} de resolução de problemas em rede normalmente
 apenas suporta arcos com um limite superior. Assim, aplica-se a mudança de
 variável \textit{yij = xij - lij} em que \textit{lij} é o limite inferior de
 fluxo no arco (i, j). Visto que o objetivo é visitar todas os arcos do grafo
 pelo menos uma vez esta é igual a 1.\\
 Aplicando esta mudança de variável à condição acima descrita obtemos que
-\textit{xij >= 1} é equivalente a \textit{yij >= 0}.
+\textit{xij \textgreater= 1} é equivalente a \textit{yij \textgreater= 0}.
 
 \subsection{Nodos}
 Para cada nodo no mapa, a soma de todas as vezes que se entra neste
@@ -183,7 +184,7 @@ como número a cada nodo o valor da posição da letra no alfabeto.
 \pagebreak
 \section{Interpretação do resultado}
 \label{solution}
-O valor obtido ótimo com recurso ao \textit{relax4} é 87 (primeira linha do
+O valor obtido ótimo com recurso ao \textit{RELAX4} é 87 (primeira linha do
 texto de output). Uma vez que foi realizada uma mudança de variável, todos os
 arcos foram visitadas n+1 vez do que a que é indicada na solução. Logo, para
 obter o custo real do percurso obtido, é necessário somar ao valor obtido a soma
@@ -383,29 +384,31 @@ M: - ydm + yml + yme = -1
 \end{figure}
 
 \begin{table}[H]
+\centering
 \begin{tabular}{|l|l|l|l|l|l|l|}
 \hline
 exc./def. & M         & A       & B        & C         & K            & I         \\ \hline
-D          & DM        & DMLA    & DMLAB    & DMLABC    & DMLABFHIJK   & DMLABFHI  \\ \hline
-E          & EDM       & EDMLA   & EDMLAB   & EDMLABC   & EDMLABFHIJK  & EDMLABFHI \\ \hline
-L          & LADM      & LA      & LAB      & LABC      & LABFHIJK     & LABFHI    \\ \hline
-H          & HIJKFEDM  & HIJKLA  & HIJKLAB  & HIJKLABC  & HIJK         & HI        \\ \hline
-G          & GHIJKFEDM & GHIJKLA & GHIJKLAB & GHIJKLABC & GHIJK        & GHI       \\ \hline
-J          & JKFEDM    & JKLA    & JKLAB    & JKLABC    & JK           & JKFHI     \\ \hline 
+D         & DM        & DMLA    & DMLAB    & DMLABC    & DMLABFHIJK   & DMLABFHI  \\ \hline
+E         & EDM       & EDMLA   & EDMLAB   & EDMLABC   & EDMLABFHIJK  & EDMLABFHI \\ \hline
+L         & LADM      & LA      & LAB      & LABC      & LABFHIJK     & LABFHI    \\ \hline
+H         & HIJKFEDM  & HIJKLA  & HIJKLAB  & HIJKLABC  & HIJK         & HI        \\ \hline
+G         & GHIJKFEDM & GHIJKLA & GHIJKLAB & GHIJKLABC & GHIJK        & GHI       \\ \hline
+J         & JKFEDM    & JKLA    & JKLAB    & JKLABC    & JK           & JKFHI     \\ \hline 
 \end{tabular}
     \caption{caminhos mais curtos para cada arco (obtidos por inspeção)}
 \end{table}
 
 \begin{table}[H]
+\centering
 \begin{tabular}{|l|l|l|l|l|l|l|}
 \hline
 exc./def. & M  & A  & B  & C  & K  & I  \\ \hline
-D          & 6  & 21 & 24 & 28 & 40 & 33 \\ \hline
-E          & 8  & 23 & 26 & 30 & 42 & 35 \\ \hline
-L          & 22 & 13 & 16 & 20 & 32 & 25 \\ \hline
-H          & 23 & 26 & 29 & 33 & 9  & 2  \\ \hline
-G          & 26 & 29 & 32 & 36 & 12 & 5  \\ \hline
-J          & 18 & 21 & 24 & 28 & 4  & 13 \\ \hline 
+D         & 6  & 21 & 24 & 28 & 40 & 33 \\ \hline
+E         & 8  & 23 & 26 & 30 & 42 & 35 \\ \hline
+L         & 22 & 13 & 16 & 20 & 32 & 25 \\ \hline
+H         & 23 & 26 & 29 & 33 & 9  & 2  \\ \hline
+G         & 26 & 29 & 32 & 36 & 12 & 5  \\ \hline
+J         & 18 & 21 & 24 & 28 & 4  & 13 \\ \hline 
 \end{tabular}
 \caption{custo do caminho entre cada arco}
 \end{table}
@@ -431,7 +434,7 @@ posição da letra no alfabeto.
 \pagebreak
 \section{Interpretação do resultado}
 \label{solution}
-Tal como na primeira parte, o valor obtido com recurso ao \textit{relax4} é 87
+Tal como na primeira parte, o valor obtido com recurso ao \textit{RELAX4} é 87
 (primeira linha do texto de output). Uma vez que o modelo de minimização
 consiste em determinar os caminhos adicionais a realizar de modo a minimizar a
 soma dos seus custos. O custo do caminho calculado é igual a 87 + 85, que é
@@ -478,6 +481,13 @@ excesso e os vértices de defeito.
         \item GH $\rightarrow$ HI $\rightarrow$ IJ $\rightarrow$ JK $\rightarrow$ KL $\rightarrow$ LA $\rightarrow$ AB
         \item JK
 \end{itemize}
+
+\section{Validação do modelo}
+Após a observação dos resultados obtidos, conseguimos verificar que as condições
+criadas inicialmente foram cumpridas.\\
+Existem arcos de reposicionameto para cada vértice de forma a que exista um
+equilibrio entre os vértices de excessso e de defeito, mostrando assim que o
+modelo é válido.
 
 \chapter{Conclusão}
 Concluindo, com este trabalho implementamos dois métodos distintos de calcular
