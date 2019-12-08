@@ -3,6 +3,7 @@
 ## Index
 * [Linear Programming](PL1)
 * [Relax4](PL2)
+* [Critical Path Method](PL3)
 
 ## Authors
 * [João Teixeira](https://github.com/jtexeira)

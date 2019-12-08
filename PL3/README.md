@@ -1,6 +1,4 @@
-# Chinese Postman Problem
-A derivative of the Traveling Salesman Problem solved using repositioning
-paths and biparted graphs.
+# Critical Path Method
 
 ## Authors
 * [João Teixeira](https://github.com/jtexeira)
