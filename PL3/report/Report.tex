@@ -1,0 +1,208 @@
+\documentclass[a4paper]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[portuguese]{babel}
+\usepackage{hyperref}
+\usepackage{a4wide}
+\hypersetup{pdftitle={MDIO - Trabalho 2},
+pdfauthor={João Teixeira, José Ferreira, Miguel Solino},
+colorlinks=true,
+urlcolor=blue,
+linkcolor=black}
+\usepackage{subcaption}
+\usepackage[cache=false]{minted}
+\usepackage{listings}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{appendix}
+\usepackage{tikz}
+\usepackage{authblk}
+\usepackage{bashful}
+\usepackage{verbatim}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usepackage{tikz,fullpage}
+\usetikzlibrary{arrows,%
+                petri,%
+                topaths}%
+\usepackage{tkz-berge}
+\usetikzlibrary{positioning,automata,decorations.markings}
+\AfterEndEnvironment{figure}{\noindent\ignorespaces}
+\AfterEndEnvironment{table}{\noindent\ignorespaces}
+
+\begin{document}
+
+\title{MDIO - Trabalho 2\\ 
+\large Grupo Nº 3}
+\author{João Teixeira (A85504) \and José Ferreira (A83683) \and Miguel Solino (A86435)}
+\date{\today}
+
+\begin{center}
+    \begin{minipage}{0.75\linewidth}
+        \centering
+        \includegraphics[width=0.4\textwidth]{images/eng.jpeg}\par\vspace{1cm}
+        \vspace{1.5cm}
+        \href{https://www.uminho.pt/PT}
+        {\color{black}{\scshape\LARGE Universidade do Minho}} \par
+        \vspace{1cm}
+        \href{https://www.di.uminho.pt/}
+        {\color{black}{\scshape\Large Departamento de Informática}} \par
+        \vspace{1.5cm}
+        \maketitle
+    \end{minipage}
+\end{center}
+
+\tableofcontents
+
+\pagebreak
+
+\chapter{Introdução}
+
+\chapter{Parte 0}
+A lista de atividade/duração/precedêndia apresentada inicialmente tem a seguinte
+estrutura:
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l|l|l|}
+        \hline
+        Atividade & Duração & Precedencia \\ \hline
+        0         & 4       & -           \\ \hline
+        1         & 6       & 0           \\ \hline
+        2         & 7       & 1, 4        \\ \hline
+        3         & 2       & 2, 5        \\ \hline
+        4         & 9       & 0, 7        \\ \hline
+        5         & 4       & 4, 8        \\ \hline
+        6         & 5       & -           \\ \hline
+        7         & 6       & 6           \\ \hline
+        8         & 4       & 7, 10       \\ \hline
+        9         & 2       & 8, 11       \\ \hline
+        10        & 8       & 6           \\ \hline
+        11        & 7       & 10          \\ \hline
+    \end{tabular}
+\end{table}
+Que pode ser representada na forma de um grafo:
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=1,transform shape]
+  \Vertex[x=0.5,y=6]{0}
+  \Vertex[x=2,y=6]{1}
+  \Vertex[x=4,y=6]{2}
+  \Vertex[x=6,y=6]{3}
+
+  \Vertex[x=-1,y=4]{ini}
+  \Vertex[x=3,y=4]{4}
+  \Vertex[x=5,y=4]{5}
+  \Vertex[x=7,y=4]{fim}
+  
+  \Vertex[x=0.5,y=2]{6}
+  \Vertex[x=2,y=2]{7}
+  \Vertex[x=4,y=2]{8}
+  \Vertex[x=6,y=2]{9}
+
+  \Vertex[x=2,y=0]{10}
+  \Vertex[x=4,y=0]{11}
+
+  \tikzstyle{LabelStyle}=[fill=gray!30]
+  \tikzstyle{EdgeStyle}=[post]
+    \Edge(ini)(0)
+    \Edge(0)(1)
+    \Edge(1)(2)
+    \Edge(2)(3)
+    \Edge(3)(fim)
+    \Edge(0)(4)
+    \Edge(4)(2)
+    \Edge(4)(5)
+    \Edge(5)(3)
+    \Edge(5)(fim)
+    \Edge(ini)(6)
+    \Edge(6)(7)
+    \Edge(7)(4)
+    \Edge(7)(8)
+    \Edge(8)(5)
+    \Edge(8)(9)
+    \Edge(9)(fim)
+    \Edge(6)(10)
+    \Edge(10)(8)
+    \Edge(10)(11)
+    \Edge(11)(9)
+\end{tikzpicture}
+\end{figure}
+
+Observando os números de inscrição dos membros do grupo, constatamos
+que o maior pertencia ao aluno Miguel Solino (86435).
+Fazendo \textit{pattern matching} para o padrão ABCDE e seguindo as
+regras definidas no enunciado, concluímos que a orientação das ruas é:
+
+\begin{enumerate}
+    \item A é igual a 8;
+    \item B é igual a 6;
+    \item C é igual a 4;
+    \item D é igual a 3;
+    \item E é igual a 5;
+\end{enumerate}
+Assim, as atividades com o número 3 e 5 serão eliminadas 
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l|l|l|}
+        \hline
+        Atividade & Duração & Precedência \\ \hline
+        0         & 4       & -           \\ \hline
+        1         & 6       & 0           \\ \hline
+        2         & 7       & 1, 4        \\ \hline
+        %3         & 2       & 2, 5        \\ \hline
+        4         & 9       & 0, 7        \\ \hline
+        %5         & 4       & 4, 8        \\ \hline
+        6         & 5       & -           \\ \hline
+        7         & 6       & 6           \\ \hline
+        8         & 4       & 7, 10       \\ \hline
+        9         & 2       & 8, 11       \\ \hline
+        10        & 8       & 6           \\ \hline
+        11        & 7       & 10          \\ \hline
+    \end{tabular}
+\end{table}
+Que pode ser representada na forma de um grafo:
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=1,transform shape]
+  \Vertex[x=0.5,y=6]{0}
+  \Vertex[x=2,y=6]{1}
+  \Vertex[x=4,y=6]{2}
+
+  \Vertex[x=-1,y=4]{ini}
+  \Vertex[x=3,y=4]{4}
+  \Vertex[x=7,y=4]{fim}
+  
+  \Vertex[x=0.5,y=2]{6}
+  \Vertex[x=2,y=2]{7}
+  \Vertex[x=4,y=2]{8}
+  \Vertex[x=6,y=2]{9}
+
+  \Vertex[x=2,y=0]{10}
+  \Vertex[x=4,y=0]{11}
+
+  \tikzstyle{LabelStyle}=[fill=gray!30]
+  \tikzstyle{EdgeStyle}=[post]
+    \Edge(ini)(0)
+    \Edge(0)(1)
+    \Edge(1)(2)
+    \Edge(2)(fim)
+    \Edge(0)(4)
+    \Edge(4)(2)
+    \Edge(4)(fim)
+    \Edge(ini)(6)
+    \Edge(6)(7)
+    \Edge(7)(4)
+    \Edge(7)(8)
+    \Edge(8)(fim)
+    \Edge(8)(9)
+    \Edge(9)(fim)
+    \Edge(6)(10)
+    \Edge(10)(8)
+    \Edge(10)(11)
+    \Edge(11)(9)
+\end{tikzpicture}
+\end{figure}
+
+\chapter{Conclusão}
+
+\end{document}
