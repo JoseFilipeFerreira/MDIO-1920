@@ -21,6 +21,7 @@ linkcolor=black}
 \usepackage{amsmath}
 \usepackage{tikz}
 \usepackage{tikz,fullpage}
+\usepackage{pgfgantt}
 \usetikzlibrary{arrows,%
                 petri,%
                 topaths}%
@@ -56,10 +57,13 @@ linkcolor=black}
 \pagebreak
 
 \chapter{Introdução}
+O \textit{Critical Path Method} é uma ferramenta fundamental para a gestão de
+projetos.
 
 \chapter{Parte 0}
-A lista de atividade/duração/precedêndia apresentada inicialmente tem a seguinte
-estrutura:
+\section{Alínea 1}
+A lista de atividades a realizar e as suas respetivas precedência apresentadas
+inicialmente no enunciado são as seguintes:
 \begin{table}[H]
     \centering
     \begin{tabular}{|l|l|l|}
@@ -78,59 +82,60 @@ estrutura:
         10        & 8       & 6           \\ \hline
         11        & 7       & 10          \\ \hline
     \end{tabular}
+    \caption{projeto inicial}
 \end{table}
-Que pode ser representada na forma de um grafo:
+
 \begin{figure}[H]
-\centering
-\begin{tikzpicture}[scale=1,transform shape]
-  \Vertex[x=0.5,y=6]{0}
-  \Vertex[x=2,y=6]{1}
-  \Vertex[x=4,y=6]{2}
-  \Vertex[x=6,y=6]{3}
+    \centering
+    \begin{tikzpicture}[scale=1,transform shape]
+        \Vertex[x=0.5,y=6]{0}
+        \Vertex[x=2,y=6]{1}
+        \Vertex[x=4,y=6]{2}
+        \Vertex[x=6,y=6]{3}
 
-  \Vertex[x=-1,y=4]{ini}
-  \Vertex[x=3,y=4]{4}
-  \Vertex[x=5,y=4]{5}
-  \Vertex[x=7,y=4]{fim}
+        \Vertex[x=-1,y=4]{ini}
+        \Vertex[x=3,y=4]{4}
+        \Vertex[x=5,y=4]{5}
+        \Vertex[x=7,y=4]{fim}
   
-  \Vertex[x=0.5,y=2]{6}
-  \Vertex[x=2,y=2]{7}
-  \Vertex[x=4,y=2]{8}
-  \Vertex[x=6,y=2]{9}
+        \Vertex[x=0.5,y=2]{6}
+        \Vertex[x=2,y=2]{7}
+        \Vertex[x=4,y=2]{8}
+        \Vertex[x=6,y=2]{9}
 
-  \Vertex[x=2,y=0]{10}
-  \Vertex[x=4,y=0]{11}
+        \Vertex[x=2,y=0]{10}
+        \Vertex[x=4,y=0]{11}
 
-  \tikzstyle{LabelStyle}=[fill=gray!30]
-  \tikzstyle{EdgeStyle}=[post]
-    \Edge(ini)(0)
-    \Edge(0)(1)
-    \Edge(1)(2)
-    \Edge(2)(3)
-    \Edge(3)(fim)
-    \Edge(0)(4)
-    \Edge(4)(2)
-    \Edge(4)(5)
-    \Edge(5)(3)
-    \Edge(5)(fim)
-    \Edge(ini)(6)
-    \Edge(6)(7)
-    \Edge(7)(4)
-    \Edge(7)(8)
-    \Edge(8)(5)
-    \Edge(8)(9)
-    \Edge(9)(fim)
-    \Edge(6)(10)
-    \Edge(10)(8)
-    \Edge(10)(11)
-    \Edge(11)(9)
-\end{tikzpicture}
+        \tikzstyle{LabelStyle}=[fill=gray!30]
+        \tikzstyle{EdgeStyle}=[post]
+            \Edge(ini)(0)
+            \Edge(0)(1)
+            \Edge(1)(2)
+            \Edge(2)(3)
+            \Edge(3)(fim)
+            \Edge(0)(4)
+            \Edge(4)(2)
+            \Edge(4)(5)
+            \Edge(5)(3)
+            \Edge(5)(fim)
+            \Edge(ini)(6)
+            \Edge(6)(7)
+            \Edge(7)(4)
+            \Edge(7)(8)
+            \Edge(8)(5)
+            \Edge(8)(9)
+            \Edge(9)(fim)
+            \Edge(6)(10)
+            \Edge(10)(8)
+            \Edge(10)(11)
+            \Edge(11)(9)
+    \end{tikzpicture}
+    \caption{representação do projeto inicial em forma de grafo}
 \end{figure}
-
 Observando os números de inscrição dos membros do grupo, constatamos
 que o maior pertencia ao aluno Miguel Solino (86435).
-Fazendo \textit{pattern matching} para o padrão ABCDE e seguindo as
-regras definidas no enunciado, concluímos que a orientação das ruas é:
+Fazendo \textit{pattern matching} para o padrão ABCDE obtivemos os seguintes
+valores:
 
 \begin{enumerate}
     \item A é igual a 8;
@@ -139,7 +144,10 @@ regras definidas no enunciado, concluímos que a orientação das ruas é:
     \item D é igual a 3;
     \item E é igual a 5;
 \end{enumerate}
-Assim, as atividades com o número 3 e 5 serão eliminadas 
+Assim, seguindo o descrito no enunciado, as atividades com o número 3 e 5 serão
+eliminadas.
+Seguindo os critérios definidos, a nova tabela representativa das atividades a
+realizar é a seguinte:
 
 \begin{table}[H]
     \centering
@@ -159,49 +167,106 @@ Assim, as atividades com o número 3 e 5 serão eliminadas
         10        & 8       & 6           \\ \hline
         11        & 7       & 10          \\ \hline
     \end{tabular}
+    \caption{projeto a realizar}
 \end{table}
-Que pode ser representada na forma de um grafo:
+
 \begin{figure}[H]
-\centering
-\begin{tikzpicture}[scale=1,transform shape]
-  \Vertex[x=0.5,y=6]{0}
-  \Vertex[x=2,y=6]{1}
-  \Vertex[x=4,y=6]{2}
+    \centering
+    \begin{tikzpicture}[scale=1,transform shape]
+        \Vertex[x=0.5,y=6]{0}
+        \Vertex[x=2,y=6]{1}
+        \Vertex[x=4,y=6]{2}
 
-  \Vertex[x=-1,y=4]{ini}
-  \Vertex[x=3,y=4]{4}
-  \Vertex[x=7,y=4]{fim}
+        \Vertex[x=-1,y=4]{ini}
+        \Vertex[x=3,y=4]{4}
+        \Vertex[x=7,y=4]{fim}
   
-  \Vertex[x=0.5,y=2]{6}
-  \Vertex[x=2,y=2]{7}
-  \Vertex[x=4,y=2]{8}
-  \Vertex[x=6,y=2]{9}
+        \Vertex[x=0.5,y=2]{6}
+        \Vertex[x=2,y=2]{7}
+        \Vertex[x=4,y=2]{8}
+        \Vertex[x=6,y=2]{9}
 
-  \Vertex[x=2,y=0]{10}
-  \Vertex[x=4,y=0]{11}
+        \Vertex[x=2,y=0]{10}
+        \Vertex[x=4,y=0]{11}
 
-  \tikzstyle{LabelStyle}=[fill=gray!30]
-  \tikzstyle{EdgeStyle}=[post]
-    \Edge(ini)(0)
-    \Edge(0)(1)
-    \Edge(1)(2)
-    \Edge(2)(fim)
-    \Edge(0)(4)
-    \Edge(4)(2)
-    \Edge(4)(fim)
-    \Edge(ini)(6)
-    \Edge(6)(7)
-    \Edge(7)(4)
-    \Edge(7)(8)
-    \Edge(8)(fim)
-    \Edge(8)(9)
-    \Edge(9)(fim)
-    \Edge(6)(10)
-    \Edge(10)(8)
-    \Edge(10)(11)
-    \Edge(11)(9)
-\end{tikzpicture}
+        \tikzstyle{LabelStyle}=[fill=gray!30]
+        \tikzstyle{EdgeStyle}=[post]
+            \Edge(ini)(0)
+            \Edge(0)(1)
+            \Edge(1)(2)
+            \Edge(2)(fim)
+            \Edge(0)(4)
+            \Edge(4)(2)
+            \Edge(4)(fim)
+            \Edge(ini)(6)
+            \Edge(6)(7)
+            \Edge(7)(4)
+            \Edge(7)(8)
+            \Edge(8)(fim)
+            \Edge(8)(9)
+            \Edge(9)(fim)
+            \Edge(6)(10)
+            \Edge(10)(8)
+            \Edge(10)(11)
+            \Edge(11)(9)
+    \end{tikzpicture}
+    \caption{representação do projeto a realizar em forma de grafo}
 \end{figure}
+
+\pagebreak
+\section{Alínea 2 - Diagrama de Grantt}
+
+\subsection{Texto de input}
+\label{input}
+\verbatiminput{gantt.lp}
+
+\subsection{Ficheiro de output}
+\label{output}
+\bash[stdout]
+lp_solve gantt.lp
+\END
+
+
+\subsection{Interpretação dos resultados}
+
+\begin{figure}[H]
+    \centering
+    \begin{ganttchart}[vgrid, hgrid]{1}{27}
+        \ganttbar{Task 0}{1}{4}\\
+        \ganttbar{Task 6}{1}{5}\\
+
+        \ganttbar{Task 1}{5}{10}\\
+        \ganttbar{Task 7}{6}{11}\\
+        \ganttbar{Task 10}{6}{13}\\
+        
+        \ganttbar{Task 4}{12}{20}\\
+        \ganttbar{Task 11}{14}{20}\\
+        
+        \ganttbar{Task 8}{17}{20}\\
+        
+        \ganttbar{Task 9}{21}{22}\\
+        
+        \ganttbar{Task 2}{21}{27}\\
+    \end{ganttchart}
+    \caption{diagrama de Gantt}
+\end{figure}
+
+
+
+
+\chapter{Parte 1}
+
+
+
+
+\chapter{Parte 2}
+
+
+
+
+
+
+
 
 \chapter{Conclusão}
 
