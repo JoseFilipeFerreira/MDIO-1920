@@ -61,14 +61,14 @@ O \textit{Critical Path Method} é uma ferramenta fundamental para a gestão de
 projetos.
 
 \chapter{Parte 0}
-\section{Alínea 1}
-A lista de atividades a realizar e as suas respetivas precedência apresentadas
+\section{Alínea 1 - Nova rede do projeto}
+A lista de atividades a realizar e as suas respectivas precedência apresentadas
 inicialmente no enunciado são as seguintes:
 \begin{table}[H]
     \centering
     \begin{tabular}{|l|l|l|}
         \hline
-        Atividade & Duração & Precedencia \\ \hline
+        Atividade & Duração & Precedência \\ \hline
         0         & 4       & -           \\ \hline
         1         & 6       & 0           \\ \hline
         2         & 7       & 1, 4        \\ \hline
@@ -214,21 +214,30 @@ realizar é a seguinte:
 \end{figure}
 
 \pagebreak
-\section{Alínea 2 - Diagrama de Grantt}
+\section{Alínea 2 - Diagrama de Gantt}
+O diagrama de Gantt representa o plano de atividades do projeto.\\
+A fim de saber o tempo em que começa cada atividade foi resolvido um problema de
+programação linear que respeita as seguintes regras:
+\begin{itemize}
+    \item As variáveis de decisão são do tipo ti, com i igual ao id de uma
+        atividade, que representa do tempo em que começa uma dada atividade.
+    \item As restrições garantem as precedências entre as atividades e que as
+        suas durações são respeitadas.
+    \item A função objetivo consiste em  minimizar a variável de decisão
+        \textit{tfinal} que representa o instante em que acaba o projeto.
+\end{itemize}
 
 \subsection{Texto de input}
-\label{input}
 \verbatiminput{gantt.lp}
 
+\pagebreak
 \subsection{Ficheiro de output}
-\label{output}
 \bash[stdout]
 lp_solve gantt.lp
 \END
 
 
 \subsection{Interpretação dos resultados}
-
 \begin{figure}[H]
     \centering
     \begin{ganttchart}[vgrid, hgrid]{1}{27}
@@ -251,21 +260,41 @@ lp_solve gantt.lp
     \caption{diagrama de Gantt}
 \end{figure}
 
-
-
-
 \chapter{Parte 1}
+\section{Caminho Critico}
+O caminho crítico corresponde ao caminho mais longo entre o vértice ini e o
+vértice fim, o que corresponde ao início do projecto e  ao fim do projecto.\\
+Para obter este caminho é necessário resolver um problema de programação linear
+que respeita os seguintes critérios:\\
+\begin{itemize}
+    \item As variáveis de decisão são do tipo xij, com i a ser o vértice de origem e j o
+vértice de destino, e representam o fluxo de um determinado arco.
+    \item As restrições garantem que o fluxo que entra num vértice é igual ao fluxo que
+sai.
+    \item A função objetivo garante que o caminho obtido é de facto o maior
+\end{itemize}
+
+\subsection{Texto de input}
+\verbatiminput{critical_path.lp}
+
+\pagebreak
+\subsection{Ficheiro de output}
+\bash[stdout]
+lp_solve critical_path.lp
+\END
+
+\subsection{Interpretação dos resultados}
+Analisando os resultados obtidos concluímos que o caminho critico é o caminho 6,
+7, 4 e 2.
 
 
+No diagrama de Gantt obtido anteriormente é possível observar atividades que
+ocorrem ao mesmo tempo.
+Neste caso, a atividade 4, 8 e 11 decorrem as três em simultâneo.
+A atividade pertence ao caminho critico.
 
 
 \chapter{Parte 2}
-
-
-
-
-
-
 
 
 \chapter{Conclusão}
