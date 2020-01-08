@@ -284,18 +284,102 @@ lp_solve critical_path.lp
 \END
 
 \subsection{Interpretação dos resultados}
-Analisando os resultados obtidos concluímos que o caminho critico é o caminho 6,
-7, 4 e 2.
+Analisando os resultados obtidos concluímos que o caminho mais longo entre o
+nodo ini e o nodo fim é o caminho que passa pelos vértices 6, 7, 4 e 2.\\
+Assim, o caminho crítico deste projeto corresponde ao caminho 6, 7, 4 e 2.
 
+\section{Atividade paralelas}
+No diagrama de Gantt obtido anteriormente é possível observar facilmente
+atividades que ocorrem ao mesmo tempo.\\
+Neste caso, a atividade 1, 7 e 10 ocorrem as três em simultâneo (sendo que a
+atividade 7 pertence ao caminho critico calculado anteriormente).\\
+Se existir apenas um equipamento para realizar estas atividades, isso implica
+que estas não podem estar a decorrer em simultâneo.
 
-No diagrama de Gantt obtido anteriormente é possível observar atividades que
-ocorrem ao mesmo tempo.
-Neste caso, a atividade 4, 8 e 11 decorrem as três em simultâneo.
-A atividade pertence ao caminho critico.
+\section{Máquina única}
+Se existir uma máquina partilhada entre as atividades 1, 7 e 10 e apenas existir
+uma máquina ativa, apenas pode estar a decorrer uma dessas atividades em
+simultâneo.
+
+\pagebreak
+\subsection{Texto de input}
+\verbatiminput{overlap.lp}
+
+\pagebreak
+\subsection{Ficheiro de output}
+\bash[stdout]
+lp_solve overlap.lp
+\END
+
+\subsection{Interpretação dos resultados}
+\begin{figure}[H]
+    \centering
+    \begin{ganttchart}[vgrid, hgrid]{1}{32}
+        \ganttbar{Task 0}{1}{4}\\
+        \ganttbar{Task 6}{1}{5}\\
+
+        \ganttbar{Task 7}{5}{10}\\
+        \ganttbar{Task 10}{11}{18}\\
+        \ganttbar{Task 1}{19}{24}\\
+        
+        \ganttbar{Task 4}{16}{24}\\
+        \ganttbar{Task 11}{19}{25}\\
+        
+        \ganttbar{Task 8}{19}{22}\\
+        
+        \ganttbar{Task 9}{26}{27}\\
+        
+        \ganttbar{Task 2}{25}{31}\\
+    \end{ganttchart}
+    \caption{diagrama de Gantt}
+\end{figure}
 
 
 \chapter{Parte 2}
+A fim de saber quanto se deve reduzir cada uma das atividades é necessário
+seguir as seguintes regras:
+\begin{itemize}
+    \item As variáveis de decisão são do tipo ti, com i igual ao id de uma
+        atividade, que representa do tempo em que começa uma dada atividade.
+        rpi representa quanto deve ser reduzido seguindo o primeiro parâmetro.
+        rsi representa quanto deve ser reduzido seguindo o segundo parâmetro.
+    \item As restrições garantem as precedências entre as atividades e que as
+        suas durações são respeitadas.
+    \item A função objetivo consiste em  minimizar o custo total das reduções.
+\end{itemize}
 
+\pagebreak
+\subsection{Texto de input}
+\verbatiminput{reducao.lp}
+
+\pagebreak
+\subsection{Ficheiro de output}
+\bash[stdout]
+lp_solve reducao.lp
+\END
+
+\subsection{Interpretação dos resultados}
+\begin{figure}[H]
+    \centering
+    \begin{ganttchart}[vgrid, hgrid]{1}{27}
+        \ganttbar{Task 0}{1}{4}\\
+        \ganttbar{Task 6}{1}{5}\\
+
+        \ganttbar{Task 1}{5}{10}\\
+        \ganttbar{Task 7}{6}{11}\\
+        \ganttbar{Task 10}{6}{13}\\
+        
+        \ganttbar{Task 4}{12}{20}\\
+        \ganttbar{Task 11}{14}{20}\\
+        
+        \ganttbar{Task 8}{17}{20}\\
+        
+        \ganttbar{Task 9}{21}{22}\\
+        
+        \ganttbar{Task 2}{21}{27}\\
+    \end{ganttchart}
+    \caption{diagrama de Gantt}
+\end{figure}
 
 \chapter{Conclusão}
 
